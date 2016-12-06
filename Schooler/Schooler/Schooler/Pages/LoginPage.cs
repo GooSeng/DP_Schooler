@@ -6,25 +6,22 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace Schooler
+namespace Schooler.Pages
 {
-    public class login_page : ContentPage
+    public class LoginPage : ContentPage
     {
-        public login_page()
-        { 
-            var loginBtn = new Button();
-            loginBtn.Text = "Sign In";
+        public LoginPage()
+        {
+            var loginBtn = new Button() {
+                Text = "Sign In"
+            };
             loginBtn.Clicked += LoginBtn_Clicked;
 
-            var signupBtn = new Button() {
-                Text = "Sign Up"
+            var joinBtn = new Button() {
+                Text = "Sign out"
             };
-            signupBtn.Clicked += SignupBtn_Clicked;
-
-            var idLb = new Label()
-            {
-                Text = "ID"
-            };
+            joinBtn.Clicked += joinBtn_Clicked;
+            
             var id = new Entry()
             {
                 Placeholder = "ID"
@@ -34,21 +31,21 @@ namespace Schooler
                 Placeholder = "Password",
                 IsPassword = true
             };
-           
+
+            Title = "Schooler";
             Content = new StackLayout
             {
+                VerticalOptions = LayoutOptions.Center,
+
                 Children = {
                     new Label {
                         Text = "Login Page",
-
-                         HorizontalOptions = LayoutOptions.Center
-                    },
+                        HorizontalOptions = LayoutOptions.Center,
+                   },
                     id,
                     pw,
                     loginBtn,
-                    signupBtn
-
-          
+                    joinBtn
                 }
             };
 
@@ -56,13 +53,16 @@ namespace Schooler
             
         }
 
-        private void SignupBtn_Clicked(object sender, EventArgs e)
+        private void joinBtn_Clicked(object sender, EventArgs e)
         {
+
         }
 
         private void LoginBtn_Clicked(object sender, EventArgs e)
         {
-
+            // 로긴처리
+            //App.Current.MainPage = new MainPage();
+            this.Navigation.PushAsync(new MainPage());
         }
     }
 }

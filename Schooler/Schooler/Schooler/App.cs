@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Schooler.Pages;
 
 namespace Schooler
 {
@@ -11,24 +12,8 @@ namespace Schooler
     {
         public App()
         {
-            // The root page of your application
-            var content = new ContentPage
-            {
-                Title = "Schooler",
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
-
-            //            MainPage = new NavigationPage(content);
-            MainPage = new login_page();
+            MainPage = new NavigationPage(new LoginPage());
+//            MainPage = new LoginPage();
         }
 
         protected override void OnStart()
