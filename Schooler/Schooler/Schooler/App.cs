@@ -12,11 +12,12 @@ namespace Schooler
     {
         public App()
         {
+//			MainPage = new NavigationPage(new SchedulePage());
             MainPage = new NavigationPage(new LoginPage());
-//            MainPage = new LoginPage();
-        }
+			//            MainPage = new LoginPage();
+		}
 
-        protected override void OnStart()
+		protected override void OnStart()
         {
             // Handle when your app starts
         }

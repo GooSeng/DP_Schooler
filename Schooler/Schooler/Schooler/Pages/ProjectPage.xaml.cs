@@ -14,6 +14,11 @@ namespace Schooler.Pages
         {
             Title = "Project";
 
+			Content = new StackLayout()
+			{
+
+			};
+
             InitializeComponent();
         }
     }
