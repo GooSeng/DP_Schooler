@@ -6,7 +6,6 @@ using System.Text;
 using Xamarin.Forms;
 using Schooler.Pages;
 using Schooler.Class;
-using Plugin.Media;
 
 namespace Schooler
 {
