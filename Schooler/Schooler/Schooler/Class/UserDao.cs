@@ -91,6 +91,19 @@ namespace Schooler.Class
             }
         }
 
+        public List<Schedule> GetSchedule(string id,int y, int m, int d)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                string fullStr = "Schedule/" + id + "/" + y + "/" + m + "/" + d;
+                var result = client.GetStringAsync(fullStr).Result;
+                var ScheduleList = JsonConvert.DeserializeObject<List<Schedule>>(result);
+                return ScheduleList;
+            }
+        }
+
+
         public List<Schedule> GetSchedule()
         {
             return GetSchedule(LoginedUser);
@@ -99,11 +112,14 @@ namespace Schooler.Class
 
         public void AddSchedule(Schedule sc,string id)
         {
-            ScheduleModel sm = new ScheduleModel { Idx = sc.Idx, day = sc.day, name = sc.name, place = sc.place, userId = id };
+            ScheduleModel sm = new ScheduleModel { Idx = sc.Idx, day = sc.day, name = sc.name, place = sc.place, userId = id};
             using (client = new HttpClient())
             {
+                string json = JsonConvert.SerializeObject(sm);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
                 client.BaseAddress = new Uri(baseUrl);
-                var r = client.PostAsJsonAsync("Schedule/", sc).Result;
+                var r = client.PostAsJsonAsync("Schedule/", content).Result;
             }
         }
 

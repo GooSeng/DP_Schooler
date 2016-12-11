@@ -15,6 +15,9 @@ namespace Schooler.Pages
         Entry pw;
         public LoginPage()
         {
+            UserDao dao = new UserDao();
+            dao.GetSchedule("id05", 2016,12,19);
+
             var loginBtn = new Button() {
                 Text = "Sign In"
             };
