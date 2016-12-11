@@ -45,19 +45,40 @@ namespace Schooler.Views
 			// Assignment Class Member variable
 			var nameLbl = new Label { Text = "Name" };
 			var nameEntry = new Entry();
-			nameEntry.SetBinding(EntryCell.TextProperty, "name");
+			nameEntry.SetBinding(Entry.TextProperty, "name");
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
 			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
 
-			var fileLbl = new Label { Text = "File list" };
 			ListView fileList = new ListView
 			{
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(Class.File))
+				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
-			fileList.SetBinding(ListView.ItemsSourceProperty, "fildList");
+			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
+			var fileAddBtn = new Button { Text = "+" };
+			fileAddBtn.Clicked += (sender, argv) =>
+			{
+				// Todo: File add
+			};
+			var fileLayout = new StackLayout
+			{
+				Orientation = StackOrientation.Vertical,
+				Children =
+				{
+					new StackLayout
+					{
+						Orientation = StackOrientation.Horizontal,
+						Children =
+						{
+							new Label { Text = "File list" },
+							fileAddBtn
+						}
+					},
+					fileList,
+				}
+			};
 
 			var commentLbl = new Label { Text = "Comment list" };
 			ListView CommentList = new ListView
@@ -72,21 +93,20 @@ namespace Schooler.Views
 			var saveButton = new Button { Text = "Save" };
 			saveButton.Clicked += (sender, e) =>
 			{
-				var todoItem = (Schooler.Class.Todo)BindingContext;
+				var todoItem = (Schooler.Class.Assignment)BindingContext;
 				//				App.Database.SaveItem(todoItem);
 				Navigation.PopAsync();
 			};
 			var deleteButton = new Button { Text = "Delete" };
 			deleteButton.Clicked += (sender, e) =>
 			{
-				var todoItem = (Schooler.Class.Todo)BindingContext;
+				var todoItem = (Schooler.Class.Assignment)BindingContext;
 				//				App.Database.DeleteItem(todoItem.ID);
 				Navigation.PopAsync();
 			};
 			var cancelButton = new Button { Text = "Cancel" };
 			cancelButton.Clicked += (sender, e) =>
 			{
-				var todoItem = (Schooler.Class.Todo)BindingContext;
 				Navigation.PopAsync();
 			};
 
@@ -97,7 +117,7 @@ namespace Schooler.Views
 				Children = {
 					nameLbl, nameEntry,
 					deadlineLbl, deadlinePicker,
-					fileLbl, fileList,
+					fileLayout,
 					commentLbl, CommentList,
 					saveButton, deleteButton, cancelButton,
 				}

@@ -8,7 +8,7 @@ namespace Schooler.Class
 {
     class Assignment
     {
-        protected string name;
+        public string name { get; set; }
         protected DateTime deadline;
         protected List<File> fileList;
         protected List<Comment> commentList;

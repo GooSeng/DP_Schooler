@@ -16,35 +16,45 @@ namespace Schooler.Views
 
 		public AssignmentListView()
 		{
+			NavigationPage.SetHasNavigationBar(this, false);
+			UserDao dao = new UserDao();
+			
 			listView = new ListView
 			{
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(AssignmentItemCell))
 			};
-			//			listView.ItemsSource = ;
-			listView.ItemSelected += (sender, args) =>
-			{
-				var assignmentItemPage = new AssignmentItemPage();
-				assignmentItemPage.BindingContext = listView.SelectedItem;
-				Navigation.PushAsync(assignmentItemPage);
-				listView.SelectedItem = null;
-			};
-
+			listView.ItemsSource = dao.GetAssignment(dao.GetLoginedUser());
+			listView.ItemSelected += ListView_ItemSelected;
+		
 			var addBtn = new Button();
 			addBtn.Text = "+";
-			addBtn.Clicked += (sender, args) =>
-			{
-				//				var todoItem = new Assignment();
-				var todoPage = new AssignmentItemPage();
-				//				todoPage.BindingContext = todoItem;
-				Navigation.PushAsync(todoPage);
-			};
+			addBtn.Clicked += AddBtn_Clicked;
 
 			var layout = new StackLayout();
 			layout.Children.Add(addBtn);
 			layout.Children.Add(listView);
 			layout.VerticalOptions = LayoutOptions.FillAndExpand;
 			Content = layout;
+		}
+
+		private void AddBtn_Clicked(object sender, EventArgs e)
+		{
+			//				var todoItem = new Assignment();
+			var assignmentPage = new AssignmentItemPage();
+			//				todoPage.BindingContext = todoItem;
+			Navigation.PushAsync(assignmentPage);
+		}
+
+		private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			if(e.SelectedItem != null)
+			{
+				var assignmentItemPage = new AssignmentItemPage();
+				assignmentItemPage.BindingContext = e.SelectedItem;
+				Navigation.PushAsync(assignmentItemPage);
+				listView.SelectedItem = null;
+			}
 		}
 	}
 }

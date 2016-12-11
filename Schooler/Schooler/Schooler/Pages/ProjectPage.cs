@@ -13,14 +13,11 @@ namespace Schooler.Pages
 		public ProjectPage()
 		{
 			Title = "Project";
-
-			//			var nav = new NavigationPage(new Views.TodoListPage());
-
+			
 			Content = new StackLayout
 			{
 				Children = {
-					new Label { Text = "Hello Page" },
-
+					new Views.ProjectListView(),
 					new Views.TodoListView()
 				}
 			};

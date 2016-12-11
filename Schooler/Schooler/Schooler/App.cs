@@ -12,8 +12,11 @@ namespace Schooler
     {
         public App()
         {
+			Class.UserDao dao = new Class.UserDao();
+			dao.SignIn("id05", "password05");
+			MainPage = new NavigationPage(new MainPage());
 //			MainPage = new NavigationPage(new SchedulePage());
-            MainPage = new NavigationPage(new LoginPage());
+//            MainPage = new NavigationPage(new LoginPage());
 			//            MainPage = new LoginPage();
 		}
 
