@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -30,8 +31,13 @@ namespace Schooler.Class
 
         public List<File> GetFileList()
         {
-            // TODO implement here
-            return null;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("File/" + idx).Result;
+                var ScheduleList = JsonConvert.DeserializeObject<List<File>>(result);
+                return ScheduleList;
+            }
         }
 
         //-----------------------코멘트 관련-----------------------//
@@ -46,8 +52,13 @@ namespace Schooler.Class
 
         public List<Comment> GetCommentList()
         {
-            // TODO implement here
-            return null;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("Comment/" + idx).Result;
+                var ScheduleList = JsonConvert.DeserializeObject<List<Comment>>(result);
+                return ScheduleList;
+            }
         }
 
         //public bool DeleteComment(int commentIdx)

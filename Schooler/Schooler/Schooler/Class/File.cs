@@ -8,10 +8,20 @@ namespace Schooler.Class
 {
     class File
     {
-        private string fileName;
-        private string fileURL;
-        private DateTime uploadTime;
-        private int idx;
+        // 인덱 
+        public int Idx { get; set; }
+
+        // 파일이 
+        public string name { get; set; }
+
+        // 프로젝트 인덱 
+        public int projectIdx { get; set; }
+
+        // 업로드유 
+        public string uploadUserId { get; set; }
+
+        // URL 
+        public string url { get; set; }
 
     }
 }
