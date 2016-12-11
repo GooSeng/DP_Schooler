@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schooler.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -128,10 +129,18 @@ namespace Schooler.Views
 			var saveButton = new Button { Text = "Save" };
 			saveButton.Clicked += (sender, e) =>
 			{
-				var todoItem = (Schooler.Class.Assignment)BindingContext;
+				//var todoItem = (Schooler.Class.Assignment)BindingContext;
+                DateTime time = (DateTime)(deadlinePicker.GetValue(DatePicker.DateProperty));
+                Assignment temp = new Assignment(0, nameEntry.Text, time);
+                if(isNew)
+                {
+                    UserDao dao = new UserDao();
+                    dao.AddAssignment(temp);
+                }
 				//				App.Database.SaveItem(todoItem);
 				Navigation.PopAsync();
 			};
+
 			var deleteButton = new Button { Text = "Delete" };
 			deleteButton.Clicked += (sender, e) =>
 			{
@@ -139,6 +148,7 @@ namespace Schooler.Views
 				//				App.Database.DeleteItem(todoItem.ID);
 				Navigation.PopAsync();
 			};
+
 			var cancelButton = new Button { Text = "Cancel" };
 			cancelButton.Clicked += (sender, e) =>
 			{
