@@ -16,9 +16,7 @@ namespace Schooler.Pages
         public LoginPage()
         {
             UserDao dao = new UserDao();
-           // dao.GetProject("Id05");
-            dao.AddSchedule(new Schedule { name = "asdfasfd", place = "asdfasdf", day = new DateTime(2016,11,12) }, "dldnjs1013");
-
+      
             var loginBtn = new Button() {
                 Text = "Sign In"
             };
