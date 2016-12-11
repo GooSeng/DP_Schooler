@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schooler.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -12,28 +13,30 @@ namespace Schooler.Pages
     {
         public SettingPage()
         {
-			
+            UserDao dao = new UserDao();
             var signOutBtn = new Button()
             {
                 Text = "Sign out"
             };
             signOutBtn.Clicked += (sender, argv) =>
             {
+               
+                dao.SignOut();
                 Navigation.PopAsync(false);
             };
 
             Title = "Setting";
 
-			var setting = new TableView
-			{
-				Root = new TableRoot
-				{
-					new TableSection("User Info")
-					{
-						new TextCell
-						{
-							Text = "ID",
-						}
+            var setting = new TableView
+            {
+                Root = new TableRoot
+                {
+                    new TableSection("User Info")
+                    {
+                        new TextCell
+                        {
+                            Text = dao.GetLoginedUser()
+                        }
 					},
 					new TableSection("Notice")
 					{
