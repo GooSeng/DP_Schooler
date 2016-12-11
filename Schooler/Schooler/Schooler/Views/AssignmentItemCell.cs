@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace Schooler.Views
 {
-	public class ProjectItemCell : ViewCell
+	public class AssignmentItemCell : ViewCell
 	{
-		public ProjectItemCell()
+		public AssignmentItemCell()
 		{
 			var label = new Label
 			{
@@ -19,13 +19,7 @@ namespace Schooler.Views
 			};
 
 			label.SetBinding(Label.TextProperty, "name");
-
-			var typeLbl = new Label
-			{
-
-			};
-			typeLbl.SetBinding(Label.TextProperty, "isTeam");
-
+			
 			var layout = new StackLayout
 			{
 				Padding = new Thickness(20, 0, 20, 0),

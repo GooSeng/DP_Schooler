@@ -16,7 +16,7 @@ namespace Schooler.Pages
 			Content = new StackLayout
 			{
 				Children = {
-					new Label { Text = "Hello Page" }
+					new Views.AssignmentListView()
 				}
 			};
 		}
