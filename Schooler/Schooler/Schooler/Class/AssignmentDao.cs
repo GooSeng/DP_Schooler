@@ -34,7 +34,7 @@ namespace Schooler.Class
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var result = client.GetStringAsync("File/" + idx).Result;
+                var result = client.GetStringAsync("RelationProjectAndFile/" + idx).Result;
                 var ScheduleList = JsonConvert.DeserializeObject<List<File>>(result);
                 return ScheduleList;
             }
