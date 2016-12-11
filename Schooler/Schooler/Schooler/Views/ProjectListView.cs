@@ -22,13 +22,16 @@ namespace Schooler.Views
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(ProjectItemCell))
 			};
-			listView.ItemsSource = dao.GetAssignment(dao.GetLoginedUser());
-			listView.ItemSelected += (sender, args) =>
+			listView.ItemsSource = dao.GetProject(dao.GetLoginedUser());
+			listView.ItemSelected += (sender, e) =>
 			{
-				var assignmentItemPage = new ProjectItemPage();
-				assignmentItemPage.BindingContext = listView.SelectedItem;
-				Navigation.PushAsync(assignmentItemPage);
-				listView.SelectedItem = null;
+				if(e.SelectedItem != null)
+				{
+					var projectItemPage = new ProjectItemPage(false);
+					projectItemPage.BindingContext = e.SelectedItem;
+					Navigation.PushAsync(projectItemPage);
+					listView.SelectedItem = null;
+				}
 			};
 
 			var addBtn = new Button();
@@ -36,9 +39,9 @@ namespace Schooler.Views
 			addBtn.Clicked += (sender, args) =>
 			{
 				//				var todoItem = new Assignment();
-				var todoPage = new ProjectItemPage();
+				var projectItemPage = new ProjectItemPage(true);
 				//				todoPage.BindingContext = todoItem;
-				Navigation.PushAsync(todoPage);
+				Navigation.PushAsync(projectItemPage);
 			};
 
 			var layout = new StackLayout();

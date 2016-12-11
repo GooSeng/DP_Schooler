@@ -13,16 +13,18 @@ namespace Schooler.Views
 	{
 		public AssignmentItemPage(bool isNew)
 		{
+			NavigationPage.SetHasNavigationBar(this, true);
+
+			// Set Title
 			if (isNew)
 			{
 				Title = "Add Assignment";
 			}
 			else
 			{
-				this.SetBinding(ContentPage.TitleProperty, "name");
+				Title = "Edit Assingment: ";
 			}
-
-			NavigationPage.SetHasNavigationBar(this, true);
+			
 
 			/**
 			var table = new TableView
@@ -154,7 +156,7 @@ namespace Schooler.Views
 			{
 				Navigation.PopAsync();
 			};
-
+			
 			var layout = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.StartAndExpand,
