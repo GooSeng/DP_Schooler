@@ -12,7 +12,28 @@ namespace Schooler.Views
 	{
 		public CommentCell()
 		{
-			Content = new Label { Text = "Hello View" };
+			var uploaderLb = new Label();
+			uploaderLb.SetBinding(Label.TextProperty, "uploadUser");
+
+			var contentLb = new Label();
+			contentLb.SetBinding(Label.TextProperty, "contents");
+
+			var deleteBtn = new Button { Text = "-" };
+			deleteBtn.Clicked += DeleteBtn_Clicked;
+
+			View = new StackLayout
+			{
+				Orientation = StackOrientation.Horizontal,
+				Children =
+				{
+					uploaderLb, contentLb, deleteBtn
+				}
+			};
+		}
+
+		private void DeleteBtn_Clicked(object sender, EventArgs e)
+		{
+			// Todo: Comment delete
 		}
 	}
 }
