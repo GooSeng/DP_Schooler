@@ -103,6 +103,11 @@ namespace Schooler.Class
             }
         }
 
+        public List<Schedule> GetSchedule(int y, int m, int d)
+        {
+            return GetSchedule(LoginedUser,y,m,d);
+        }
+
 
         public List<Schedule> GetSchedule()
         {
