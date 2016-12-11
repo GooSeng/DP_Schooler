@@ -56,6 +56,8 @@
     <Compile Include="Pages\SettingPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CalenderItemCell.cs" />
+    <Compile Include="Views\ProjectItemCell.cs" />
+    <Compile Include="Views\ProjectItemPage.cs" />
     <Compile Include="Views\TodoItemCell.cs" />
     <Compile Include="Views\TodoItemPage.cs" />
     <Compile Include="Views\TodoListView.cs" />

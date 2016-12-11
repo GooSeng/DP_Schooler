@@ -23,7 +23,9 @@ namespace Schooler.Class
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var result = Convert.ToBoolean(client.GetStringAsync("User/" + id + "/" + password).Result);
+				var tmp = client.GetStringAsync("User/" + id + "/" + password).Result;
+				var result = Convert.ToBoolean(tmp);
+//				var result = Convert.ToBoolean(client.GetStringAsync("User/" + id + "/" + password).Result);
 
                 if (result)
                     LoginedUser = id;

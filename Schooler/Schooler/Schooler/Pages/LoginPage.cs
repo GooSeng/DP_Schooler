@@ -84,7 +84,8 @@ namespace Schooler.Pages
             if (isLogined)
                 this.Navigation.PushAsync(new MainPage());
             else
-                DisplayAlert("로그인 실패", "존재하지 않는 아이디 혹은 틀린 비밀번호 입니다", "확인");
+				DisplayAlert("fail", "no info", "ok");
+//			DisplayAlert("로그인 실패", "존재하지 않는 아이디 혹은 틀린 비밀번호 입니다", "확인");
 
         }
     }
