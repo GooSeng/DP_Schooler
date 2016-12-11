@@ -37,11 +37,14 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Class\Assignment.cs" />
+    <Compile Include="Class\AssignmentDao.cs" />
     <Compile Include="Class\Comment.cs" />
     <Compile Include="Class\File.cs" />
+    <Compile Include="Class\IDao.cs" />
     <Compile Include="Class\Project.cs" />
     <Compile Include="Class\Schedule.cs" />
     <Compile Include="Class\Todo.cs" />
+    <Compile Include="Class\UserDao.cs" />
     <Compile Include="Views\CalendarView.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\MainPage.cs" />
