@@ -14,9 +14,7 @@ namespace Schooler.Pages
         Entry id;
         Entry pw;
         public LoginPage()
-        {
-            UserDao dao = new UserDao();
-            dao.AddAssignment(new Assignment(0, "과제당", new DateTime(2017, 1, 1)), "dldnjs1013");
+        {        
             var loginBtn = new Button() {
                 Text = "Sign In"
             };
