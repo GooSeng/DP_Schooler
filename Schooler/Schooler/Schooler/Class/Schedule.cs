@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace Schooler.Class
 {
-	class Schedule
-	{
-		private string name;
-		private DateTime date;
-		private string place;
-		private int idx;
+    public class Schedule
+    {
+        public int Idx { get; set; }
 
-	}
+        public string name { get; set; }
+
+        public DateTime? day { get; set; }
+
+        public string place { get; set; }
+
+
+    }
 }
