@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
-
 using Xamarin.Forms;
 
 namespace Schooler.Pages
 {
     public class LoginPage : ContentPage
     {
+
         Entry id;
         Entry pw;
         public LoginPage()
-        {        
+        {
+            
             var loginBtn = new Button() {
                 Text = "Sign In"
             };

@@ -5,6 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 using Schooler.Pages;
+using Schooler.Class;
 
 namespace Schooler
 {
@@ -12,12 +13,15 @@ namespace Schooler
     {
         public App()
         {
+
+            Class.UserDao d = new Class.UserDao();
+
 			Class.UserDao dao = new Class.UserDao();
 			dao.SignIn("id05", "password05");
 			MainPage = new NavigationPage(new MainPage());
 //			MainPage = new NavigationPage(new SchedulePage());
 //            MainPage = new NavigationPage(new LoginPage());
-			//            MainPage = new LoginPage();
+			   //         MainPage = new LoginPage();
 		}
 
 		protected override void OnStart()
@@ -34,5 +38,10 @@ namespace Schooler
         {
             // Handle when your app resumes
         }
+
+
+        
+       
+
     }
 }
