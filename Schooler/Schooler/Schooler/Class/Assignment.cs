@@ -50,6 +50,20 @@ namespace Schooler.Class
             return deadline;
         }
 
+        public void setName(string name)
+        {
+            this.name = name;
+        }
+
+        public void setDeadline(DateTime dead)
+        {
+            deadline = dead;
+        }
+
+        public int getIdx()
+        {
+            return idx;
+        }
   
     }
 }

@@ -20,7 +20,7 @@ namespace Schooler.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+          
             LoadApplication(new Schooler.App());
         }
     }
