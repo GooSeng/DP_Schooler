@@ -12,13 +12,13 @@ namespace Schooler.Views
 	{
 		public TodoItemPage()
 		{
-			this.SetBinding(ContentPage.TitleProperty, "todoName");
+			this.SetBinding(ContentPage.TitleProperty, "name");
 
 			NavigationPage.SetHasNavigationBar(this, true);
 
 			var nameLbl = new Label { Text = "Name" };
 			var nameEntry = new Entry();
-			nameEntry.SetBinding(Entry.TextProperty, "todoName");
+			nameEntry.SetBinding(Entry.TextProperty, "name");
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
@@ -28,11 +28,11 @@ namespace Schooler.Views
 			var essentialEntry = new Xamarin.Forms.Switch();
 			essentialEntry.SetBinding(Switch.IsToggledProperty, "isEssential");
 
+			var progressLbl = new Label { Text = "Progress" };
 			var progressEntry = new Xamarin.Forms.Picker() {
-				Title = "Progress",
 				Items =
 				{
-					"A", "B", "C"
+					"Before Starting", "Proceeding", "END"
 				}
 			};
 			progressEntry.SetBinding(Picker.SelectedIndexProperty, "progress");
@@ -69,7 +69,7 @@ namespace Schooler.Views
 					nameLbl, nameEntry,
 					deadlineLbl, deadlinePicker,
 					essentialLbl, essentialEntry,
-					progressEntry,
+					progressLbl, progressEntry,
 					managerLbl, managerEntry,
 					saveButton, deleteButton, cancelButton,
 				}

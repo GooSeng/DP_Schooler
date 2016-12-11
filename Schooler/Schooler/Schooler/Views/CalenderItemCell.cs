@@ -8,18 +8,19 @@ using Xamarin.Forms;
 
 namespace Schooler.Views
 {
-	public class CalenderItemCell : ViewCell
+	public class CalenderItemCell : ContentView
 	{
 		public DateTime date;
-		public CalenderItemCell()
+		public CalenderItemCell(Class.Schedule schedule)
 		{
 			var label = new Label
 			{
 				VerticalTextAlignment = TextAlignment.Center,
 				HorizontalOptions = LayoutOptions.Center,
+				Text = schedule.day.Day.ToString()
 			};
 
-			label.SetBinding(Label.TextProperty, "Day");
+//			label.SetBinding(Label.TextProperty, "date");
 
 			var box = new BoxView
 			{
@@ -36,7 +37,8 @@ namespace Schooler.Views
 			{
 				Children = { label, box }
 			};
-			View = layout;
+//			View = layout;
+			Content = layout;
 //			Content = new Label { Text = "Hello View" };
 		}
 	}

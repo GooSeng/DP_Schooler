@@ -17,7 +17,7 @@ namespace Schooler.Pages
 
             Children.Add(new SchedulePage());
             Children.Add(new ProjectPage());
-            Children.Add(new TodoListPage());
+            Children.Add(new AssignmentPage());
             Children.Add(new SettingPage());
         }
     }

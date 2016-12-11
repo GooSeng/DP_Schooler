@@ -18,7 +18,7 @@ namespace Schooler.Views
 				HorizontalOptions = LayoutOptions.StartAndExpand
 			};
 
-			label.SetBinding(Label.TextProperty, "Name");
+			label.SetBinding(Label.TextProperty, "name");
 
 			var tick = new Image
 			{
