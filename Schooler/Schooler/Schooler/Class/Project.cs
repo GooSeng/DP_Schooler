@@ -26,5 +26,10 @@ namespace Schooler.Class
         {
             return true;
         }
+
+        public bool getIsTeam()
+        {
+            return isTeam;
+        }
     }
 }

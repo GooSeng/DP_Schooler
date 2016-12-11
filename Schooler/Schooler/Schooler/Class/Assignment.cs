@@ -39,5 +39,17 @@ namespace Schooler.Class
             dao = new AssignmentDao(idx);
             return (dao as AssignmentDao);
         }
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public DateTime getDeadline()
+        {
+            return deadline;
+        }
+
+  
     }
 }
