@@ -10,9 +10,16 @@ namespace Schooler.Views
 {
 	public class AssignmentItemPage : ContentPage
 	{
-		public AssignmentItemPage()
+		public AssignmentItemPage(bool isNew)
 		{
-			this.SetBinding(ContentPage.TitleProperty, "name");
+			if (isNew)
+			{
+				Title = "Add Assignment";
+			}
+			else
+			{
+				this.SetBinding(ContentPage.TitleProperty, "name");
+			}
 
 			NavigationPage.SetHasNavigationBar(this, true);
 
@@ -50,14 +57,16 @@ namespace Schooler.Views
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
 			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
-
-			ListView fileList = new ListView
+			
+		
+			// File List 
+			var fileList = new ListView
 			{
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
-			var fileAddBtn = new Button { Text = "+", WidthRequest = 40, HeightRequest = 40 };
+			var fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
 			fileAddBtn.Clicked += (sender, argv) =>
 			{
 				// Todo: File add
@@ -69,7 +78,7 @@ namespace Schooler.Views
 				{
 					new StackLayout
 					{
-						HorizontalOptions = LayoutOptions.Center,
+						VerticalOptions = LayoutOptions.Center,
 						Orientation = StackOrientation.Horizontal,
 						Children =
 						{
@@ -81,33 +90,37 @@ namespace Schooler.Views
 				}
 			};
 
-			ListView CommentList = new ListView
+			// Comment List
+			var commentList = new ListView
 			{
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
-			CommentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
-			var commentAddBtn = new Button { Text = "+", WidthRequest = 40, HeightRequest = 40 };
+			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
+			var commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
+			var commentEntry = new Entry { WidthRequest = 300 };
 			commentAddBtn.Clicked += (sender, argv) =>
 			{
 				// Todo: Comment add
+
 			};
 			var commentLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
 				Children =
 				{
+					new Label { Text = "Comment list" },
 					new StackLayout
 					{
-						HorizontalOptions = LayoutOptions.Center,
+						VerticalOptions = LayoutOptions.Center,
 						Orientation = StackOrientation.Horizontal,
 						Children =
 						{
-							new Label { Text = "Comment list" },
+							commentEntry,
 							commentAddBtn
 						}
 					},
-					CommentList,
+					commentList,
 				}
 			};
 
@@ -132,18 +145,27 @@ namespace Schooler.Views
 				Navigation.PopAsync();
 			};
 
-			Content = new StackLayout
+			var layout = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				Padding = new Thickness(20),
 				Children = {
 					nameLbl, nameEntry,
 					deadlineLbl, deadlinePicker,
-					fileLayout,
-					commentLayout,
-					saveButton, deleteButton, cancelButton,
 				}
 			};
+			if(!isNew)
+			{
+				layout.Children.Add(fileLayout);
+				layout.Children.Add(commentLayout);
+			}
+			layout.Children.Add(saveButton);
+			layout.Children.Add(cancelButton);
+			if (!isNew)
+			{
+				layout.Children.Add(deleteButton);
+			}
+			Content = layout;
 		}
 	}
 }

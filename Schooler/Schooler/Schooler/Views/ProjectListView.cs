@@ -36,7 +36,7 @@ namespace Schooler.Views
 			addBtn.Clicked += (sender, args) =>
 			{
 				//				var todoItem = new Assignment();
-				var todoPage = new AssignmentItemPage();
+				var todoPage = new ProjectItemPage();
 				//				todoPage.BindingContext = todoItem;
 				Navigation.PushAsync(todoPage);
 			};
