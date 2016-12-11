@@ -12,6 +12,7 @@ namespace Schooler.Pages
     {
         public SettingPage()
         {
+			
             var signOutBtn = new Button()
             {
                 Text = "Sign out"
@@ -22,13 +23,32 @@ namespace Schooler.Pages
             };
 
             Title = "Setting";
-            Content = new StackLayout
+
+			var setting = new TableView
+			{
+				Root = new TableRoot
+				{
+					new TableSection("User Info")
+					{
+						new TextCell
+						{
+							Text = "ID",
+						}
+					},
+					new TableSection("Notice")
+					{
+
+					}
+				}
+			};
+			Content = new StackLayout
             {
 //                VerticalOptions = LayoutOptions.Center,
 
                 Children = {
                     new Label { Text = "SettingPage" },
-                    signOutBtn
+                    setting,
+					signOutBtn
                 }
             };
             Padding = new Thickness(10, 10, 10, 10);
