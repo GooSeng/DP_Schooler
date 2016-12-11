@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 
 using Xamarin.Forms;
+using Schooler.Views;
 
 namespace Schooler.Pages
 {
@@ -16,7 +17,7 @@ namespace Schooler.Pages
 
             Children.Add(new SchedulePage());
             Children.Add(new ProjectPage());
-            Children.Add(new TodoPage());
+            Children.Add(new TodoListPage());
             Children.Add(new SettingPage());
         }
     }
