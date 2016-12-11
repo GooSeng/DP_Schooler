@@ -202,7 +202,7 @@ namespace Schooler.Class
 
         public void AddAssignment(Assignment sc, string id)
         {
-            StreamDataForProject sm = new StreamDataForProject {userName = id, name = sc.getName() , DeadLine = sc.getDeadline()};
+            StreamDataForProject sm = new StreamDataForProject { userName = id, name = sc.getName(), DeadLine = sc.getDeadline() };
             using (client = new HttpClient())
             {
                 string json = JsonConvert.SerializeObject(sm);
@@ -213,9 +213,14 @@ namespace Schooler.Class
             }
         }
 
+        public void AddAssignment(Assignment sc)
+        {
+            AddAssignment(sc, LoginedUser);
+        }
+
         public void AddProject(Project sc, string id)
         {
-            StreamDataForProject sm = new StreamDataForProject { userName = id, name = sc.getName(), DeadLine = sc.getDeadline(),isTeam = sc.getIsTeam() };
+            StreamDataForProject sm = new StreamDataForProject { userName = id, name = sc.getName(), DeadLine = sc.getDeadline(), isTeam = sc.getIsTeam() };
             using (client = new HttpClient())
             {
                 string json = JsonConvert.SerializeObject(sm);
@@ -224,6 +229,10 @@ namespace Schooler.Class
                 client.BaseAddress = new Uri(baseUrl);
                 var r = client.PostAsync("Project/", content).Result;
             }
+        }
+        public void AddProject(Project sc)
+        {
+            AddProject(sc, LoginedUser);
         }
 
         private List<int> GetRelation(string id)
