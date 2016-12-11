@@ -146,6 +146,8 @@ namespace Schooler
 			for (int i=0; i<startM; i++)
 			{
 				calenderGrid.Children.Add(new Label { Text = map[i].ToString(), TextColor = Color.Silver }, i%7, i/7+1);
+			//	var scheduleItems = new listDa Class.Schedule();
+			//	calenderGrid.Children.Add(new Views.CalenderItemCell(scheduleItem), i % 7, i / 7 + 1);
 			}
 			for (int i = startM; i < endM; i++)
 			{

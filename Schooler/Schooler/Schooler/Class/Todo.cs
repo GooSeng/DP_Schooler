@@ -10,7 +10,7 @@ namespace Schooler.Class
     {
 		enum PROGRESSTYPE { BEFORESTARTING, PROCEEDING, END }
 
-        private string todoName;
+		public string name { get; set; }
         private DateTime uploadTime;
 		private string uploadUser;
 		private bool isEssential;

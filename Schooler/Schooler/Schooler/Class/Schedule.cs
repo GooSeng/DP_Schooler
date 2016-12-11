@@ -12,7 +12,7 @@ namespace Schooler.Class
 
         public string name { get; set; }
 
-        public DateTime? day { get; set; }
+        public DateTime day { get; set; }
 
         public string place { get; set; }
 
