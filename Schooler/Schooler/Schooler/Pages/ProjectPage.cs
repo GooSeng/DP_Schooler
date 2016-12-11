@@ -18,7 +18,6 @@ namespace Schooler.Pages
 			{
 				Children = {
 					new Views.ProjectListView(),
-					new Views.TodoListView()
 				}
 			};
 		}

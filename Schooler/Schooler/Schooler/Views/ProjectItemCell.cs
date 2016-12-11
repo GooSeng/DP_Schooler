@@ -12,26 +12,28 @@ namespace Schooler.Views
 	{
 		public ProjectItemCell()
 		{
-			var label = new Label
+			var nameLbl = new Label
 			{
 				VerticalTextAlignment = TextAlignment.Center,
 				HorizontalOptions = LayoutOptions.StartAndExpand
 			};
 
-			label.SetBinding(Label.TextProperty, "name");
+			nameLbl.SetBinding(Label.TextProperty, "name");
 
 			var typeLbl = new Label
 			{
-
+				VerticalTextAlignment = TextAlignment.Center,
+				Text = " is Team Project",
+				TextColor = Color.Silver
 			};
-			typeLbl.SetBinding(Label.TextProperty, "isTeam");
+			typeLbl.SetBinding(Label.IsVisibleProperty, "isTeam");
 
 			var layout = new StackLayout
 			{
 				Padding = new Thickness(20, 0, 20, 0),
 				Orientation = StackOrientation.Horizontal,
 				HorizontalOptions = LayoutOptions.StartAndExpand,
-				Children = { label }
+				Children = { nameLbl, typeLbl }
 			};
 
 			View = layout;
