@@ -47,6 +47,9 @@
     <Compile Include="Class\UserDao.cs" />
     <Compile Include="Pages\AssignmentPage.cs" />
     <Compile Include="Pages\ProjectPage.cs" />
+    <Compile Include="Views\AssignmentItemCell.cs" />
+    <Compile Include="Views\AssignmentItemPage.cs" />
+    <Compile Include="Views\AssignmentListView.cs" />
     <Compile Include="Views\CalendarView.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\MainPage.cs" />
@@ -56,6 +59,9 @@
     <Compile Include="Pages\SettingPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CalenderItemCell.cs" />
+    <Compile Include="Views\DatePickerCell.cs" />
+    <Compile Include="Views\ProjectItemCell.cs" />
+    <Compile Include="Views\ProjectItemPage.cs" />
     <Compile Include="Views\TodoItemCell.cs" />
     <Compile Include="Views\TodoItemPage.cs" />
     <Compile Include="Views\TodoListView.cs" />

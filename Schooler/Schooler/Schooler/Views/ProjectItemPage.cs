@@ -6,17 +6,16 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace Schooler.Pages
+namespace Schooler.Views
 {
-	public class AssignmentPage : ContentPage
+	public class ProjectItemPage : ContentPage
 	{
-		public AssignmentPage()
+		public ProjectItemPage()
 		{
-			Title = "Assignment";
 			Content = new StackLayout
 			{
 				Children = {
-					new Views.AssignmentListView()
+					new Label { Text = "Hello Page" }
 				}
 			};
 		}

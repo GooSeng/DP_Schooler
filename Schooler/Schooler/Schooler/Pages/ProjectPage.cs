@@ -20,6 +20,7 @@ namespace Schooler.Pages
 			{
 				Children = {
 					new Label { Text = "Hello Page" },
+
 					new Views.TodoListView()
 				}
 			};

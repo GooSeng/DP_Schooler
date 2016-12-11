@@ -8,40 +8,67 @@ using Xamarin.Forms;
 
 namespace Schooler.Views
 {
-	public class TodoItemPage : ContentPage
+	public class AssignmentItemPage : ContentPage
 	{
-		public TodoItemPage()
+		public AssignmentItemPage()
 		{
 			this.SetBinding(ContentPage.TitleProperty, "name");
 
 			NavigationPage.SetHasNavigationBar(this, true);
 
+			/**
+			var table = new TableView
+			{
+				Root = new TableRoot
+				{
+					new TableSection("Assignment Info")
+					{
+						new TextCell
+						{
+							Text = "Name"
+						},
+						nameEntry,
+						new TextCell
+						{
+							Text = "Deadline"
+						},
+						deadlinePicker,
+					},
+					new TableSection("File list")
+					{
+						new FileList
+					}	
+				}
+			};
+ */
+
+			// Assignment Class Member variable
 			var nameLbl = new Label { Text = "Name" };
 			var nameEntry = new Entry();
-			nameEntry.SetBinding(Entry.TextProperty, "name");
+			nameEntry.SetBinding(EntryCell.TextProperty, "name");
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
 			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
 
-			var essentialLbl = new Label { Text = "Essential" };
-			var essentialEntry = new Xamarin.Forms.Switch();
-			essentialEntry.SetBinding(Switch.IsToggledProperty, "isEssential");
-
-			var progressLbl = new Label { Text = "Progress" };
-			var progressEntry = new Xamarin.Forms.Picker()
+			var fileLbl = new Label { Text = "File list" };
+			ListView fileList = new ListView
 			{
-				Items =
-				{
-					"Before Starting", "Proceeding", "END"
-				}
+				RowHeight = 40,
+				ItemTemplate = new DataTemplate(typeof(Class.File))
 			};
-			progressEntry.SetBinding(Picker.SelectedIndexProperty, "progress");
+			fileList.SetBinding(ListView.ItemsSourceProperty, "fildList");
 
-			var managerLbl = new Label { Text = "Manager" };
-			var managerEntry = new Entry();
-			managerEntry.SetBinding(Entry.TextProperty, "managerUser");
+			var commentLbl = new Label { Text = "Comment list" };
+			ListView CommentList = new ListView
+			{
+				RowHeight = 40,
+				ItemTemplate = new DataTemplate(typeof(Class.File))
+			};
+			fileList.SetBinding(ListView.ItemsSourceProperty, "fildList");
+			
 
+			// Buttons
 			var saveButton = new Button { Text = "Save" };
 			saveButton.Clicked += (sender, e) =>
 			{
@@ -56,7 +83,6 @@ namespace Schooler.Views
 				//				App.Database.DeleteItem(todoItem.ID);
 				Navigation.PopAsync();
 			};
-
 			var cancelButton = new Button { Text = "Cancel" };
 			cancelButton.Clicked += (sender, e) =>
 			{
@@ -71,9 +97,8 @@ namespace Schooler.Views
 				Children = {
 					nameLbl, nameEntry,
 					deadlineLbl, deadlinePicker,
-					essentialLbl, essentialEntry,
-					progressLbl, progressEntry,
-					managerLbl, managerEntry,
+					fileLbl, fileList,
+					commentLbl, CommentList,
 					saveButton, deleteButton, cancelButton,
 				}
 			};
