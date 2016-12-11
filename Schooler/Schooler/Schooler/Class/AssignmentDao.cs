@@ -70,11 +70,14 @@ namespace Schooler.Class
 
         //-----------------------과제 관련-----------------------//
         //---------------------------------------------------------//
-        //public bool DeleteAssigment(int objIdx)
-        //{
-        //    // TODO implement here
-        //    return false;
-        //}
+        public void DeleteAssigment()
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.DeleteAsync("Assignment/" + idx).Result;
+            }
+        }
 
 
     }
