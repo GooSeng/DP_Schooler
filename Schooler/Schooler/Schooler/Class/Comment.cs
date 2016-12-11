@@ -8,7 +8,7 @@ namespace Schooler.Class
 {
     class Comment
     {
-        private string contents;
+        public string contents { get; set; }
         private string uploadUser;
         private int idx;
     }

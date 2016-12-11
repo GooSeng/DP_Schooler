@@ -57,7 +57,7 @@ namespace Schooler.Views
 				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
-			var fileAddBtn = new Button { Text = "+" };
+			var fileAddBtn = new Button { Text = "+", WidthRequest = 20, HeightRequest = 20 };
 			fileAddBtn.Clicked += (sender, argv) =>
 			{
 				// Todo: File add
@@ -80,14 +80,34 @@ namespace Schooler.Views
 				}
 			};
 
-			var commentLbl = new Label { Text = "Comment list" };
 			ListView CommentList = new ListView
 			{
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(Class.File))
+				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
-			fileList.SetBinding(ListView.ItemsSourceProperty, "fildList");
-			
+			CommentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
+			var commentAddBtn = new Button { Text = "+", WidthRequest = 20, HeightRequest = 20 };
+			commentAddBtn.Clicked += (sender, argv) =>
+			{
+				// Todo: Comment add
+			};
+			var commentLayout = new StackLayout
+			{
+				Orientation = StackOrientation.Vertical,
+				Children =
+				{
+					new StackLayout
+					{
+						Orientation = StackOrientation.Horizontal,
+						Children =
+						{
+							new Label { Text = "Comment list" },
+							commentAddBtn
+						}
+					},
+					CommentList,
+				}
+			};
 
 			// Buttons
 			var saveButton = new Button { Text = "Save" };
