@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,12 +41,14 @@ namespace Schooler.Class
 
         public void SignUp(string id, string password)
         {
-
             UserModel SignUpUser = new UserModel { Id = id, password = password };
             using (client = new HttpClient())
             {
+                string json = JsonConvert.SerializeObject(SignUpUser);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+  
                 client.BaseAddress = new Uri(baseUrl);
-                var r = client.PostAsJsonAsync("User/", SignUpUser).Result;
+                var r = client.PostAsync("User/", content).Result;
 
                 // Console.Out.Write(r); 
 
@@ -57,6 +60,22 @@ namespace Schooler.Class
         public string GetLoginedUser()
         {
             return LoginedUser;
+        }
+
+        //로그인 함수
+        public bool CheckUser(string id)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = Convert.ToBoolean(client.GetStringAsync("User/" + id).Result);
+
+                if (result)
+                    return true;
+
+                return false;
+                //  var contacts = JsonConvert.DeserializeObject<contact[]>(json);
+            }
         }
 
         //-----------------------스캐줄 관련-----------------------//
