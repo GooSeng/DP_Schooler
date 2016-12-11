@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Schooler.Class
 {
-    class UserDao : IDao    //add 프로젝트랑 과제 남음
+    class UserDao : IDao  
     {
         HttpClient client;
         string baseUrl = "https://schoolerAPIServer.azurewebsites.net/api/";
@@ -126,7 +126,7 @@ namespace Schooler.Class
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 client.BaseAddress = new Uri(baseUrl);
-                var r = client.PostAsJsonAsync("Schedule/", content).Result;
+                var r = client.PostAsync("Schedule/", content).Result;
             }
         }
 
@@ -164,9 +164,9 @@ namespace Schooler.Class
 
         }
 
-        public void GetProject()// 반환형은 나중에 Project로 변환해서 바꿔야함
+        public List<Project> GetProject()// 반환형은 나중에 Project로 변환해서 바꿔야함
         {
-            GetProject(LoginedUser);
+            return GetProject(LoginedUser);
         }
 
         public List<Assignment> GetAssignment(string id)// 반환형은 나중에 Assignment로 변환해서 바꿔야함
@@ -195,9 +195,44 @@ namespace Schooler.Class
 
         }
 
-        public void GetAssignment()// 반환형은 나중에 Project로 변환해서 바꿔야함
+        public List<Assignment> GetAssignment()// 반환형은 나중에 Project로 변환해서 바꿔야함
         {
-            GetAssignment(LoginedUser);
+            return GetAssignment(LoginedUser);
+        }
+
+        public void AddAssignment(Assignment sc, string id)
+        {
+            StreamDataForProject sm = new StreamDataForProject { userName = id, name = sc.getName(), DeadLine = sc.getDeadline() };
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(sm);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("Assignment/", content).Result;
+            }
+        }
+
+        public void AddAssignment(Assignment sc)
+        {
+            AddAssignment(sc, LoginedUser);
+        }
+
+        public void AddProject(Project sc, string id)
+        {
+            StreamDataForProject sm = new StreamDataForProject { userName = id, name = sc.getName(), DeadLine = sc.getDeadline(), isTeam = sc.getIsTeam() };
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(sm);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("Project/", content).Result;
+            }
+        }
+        public void AddProject(Project sc)
+        {
+            AddProject(sc, LoginedUser);
         }
 
         private List<int> GetRelation(string id)

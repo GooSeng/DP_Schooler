@@ -14,10 +14,7 @@ namespace Schooler.Pages
         Entry id;
         Entry pw;
         public LoginPage()
-        {
-            UserDao dao = new UserDao();
-            dao.GetSchedule("id05", 2016,12,19);
-
+        {        
             var loginBtn = new Button() {
                 Text = "Sign In"
             };
@@ -61,6 +58,17 @@ namespace Schooler.Pages
 
         private void joinBtn_Clicked(object sender, EventArgs e)
         {
+            if (id.Text == null || id.Text.Length == 0)
+            {
+                DisplayAlert("fail", "check Id box", "ok");
+                return;
+            }
+            if (pw.Text == null || pw.Text.Length == 0)
+            {
+                DisplayAlert("fail", "check pw box", "ok");
+                return;
+            }
+
             UserDao dao = new UserDao();
 
             if(dao.CheckUser(id.Text))
@@ -78,6 +86,17 @@ namespace Schooler.Pages
 
         private void LoginBtn_Clicked(object sender, EventArgs e)
         {
+            if (id.Text == null || id.Text.Length == 0)
+            {
+                DisplayAlert("fail", "check Id box", "ok");
+                return;
+            }
+            if (pw.Text == null || pw.Text.Length == 0)
+            {
+                DisplayAlert("fail", "check pw box", "ok");
+                return;
+            }
+
             // 로긴처리
             //App.Current.MainPage = new MainPage();
             UserDao dao = new UserDao();

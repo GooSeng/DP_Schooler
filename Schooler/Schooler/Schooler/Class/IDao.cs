@@ -53,11 +53,23 @@ namespace Schooler.Class
             
         }
 
+        protected class StreamDataForProject
+        {
+            public string userName { get; set; }
+            public string name { get; set; }
+
+            public bool? isTeam { get; set; }
+
+            public DateTime? DeadLine { get; set; }
+
+            
+        }
+
 
         //-----------------------그대로 사용가능한 클래스-----------------------//
-      
 
-        
+
+
 
     }
 }
