@@ -38,13 +38,13 @@ namespace Schooler.Views
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
-			deadlinePicker.Format = "yyyy-MM-dd hh:mm";
-			deadlinePicker.BindingContext = "deadline";
-//			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
+			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
 
 			var isTeamLbl = new Label { Text = "Team Project" };
 			var isTeamSwitch = new Switch();
 			isTeamSwitch.SetBinding(Switch.IsToggledProperty, "isTeam");
+			if (idx != -1)
+				isTeamSwitch.IsEnabled = false;
 
 			// File List 
 			var fileList = new ListView
@@ -165,6 +165,9 @@ namespace Schooler.Views
 				layout.Children.Add(fileLayout);
 				layout.Children.Add(commentLayout);
 				layout.Children.Add(todolistView);
+
+				if (isTeamSwitch.IsToggled)
+					layout.Children.Add(teamLayout);
 			}
 			layout.Children.Add(saveButton);
 			layout.Children.Add(cancelButton);
@@ -175,7 +178,7 @@ namespace Schooler.Views
 
 			Content = layout;
 		}
-
+		
 		private void FileAddBtn_Clicked(object sender, EventArgs e)
 		{
 			throw new NotImplementedException();
