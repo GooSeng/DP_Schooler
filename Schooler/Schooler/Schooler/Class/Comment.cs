@@ -8,8 +8,15 @@ namespace Schooler.Class
 {
     class Comment
     {
-        public string contents { get; set; }
-        private string uploadUser;
-        private int idx;
+        public int Idx { get; set; }
+
+        // 프로젝트 인덱 
+        public int? projectIdx { get; set; }
+
+        // 작성유 
+        public string uploadUserId { get; set; }
+
+        // 코멘트내 
+        public string comment { get; set; }
     }
 }

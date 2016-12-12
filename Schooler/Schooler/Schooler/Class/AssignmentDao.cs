@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -30,8 +31,13 @@ namespace Schooler.Class
 
         public List<File> GetFileList()
         {
-            // TODO implement here
-            return null;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("RelationProjectAndFile/" + idx).Result;
+                var ScheduleList = JsonConvert.DeserializeObject<List<File>>(result);
+                return ScheduleList;
+            }
         }
 
         //-----------------------코멘트 관련-----------------------//
@@ -46,8 +52,13 @@ namespace Schooler.Class
 
         public List<Comment> GetCommentList()
         {
-            // TODO implement here
-            return null;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("Comment/" + idx).Result;
+                var ScheduleList = JsonConvert.DeserializeObject<List<Comment>>(result);
+                return ScheduleList;
+            }
         }
 
         //public bool DeleteComment(int commentIdx)
@@ -59,11 +70,27 @@ namespace Schooler.Class
 
         //-----------------------과제 관련-----------------------//
         //---------------------------------------------------------//
-        //public bool DeleteAssigment(int objIdx)
-        //{
-        //    // TODO implement here
-        //    return false;
-        //}
+        public void DeleteAssigment()
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.DeleteAsync("Assignment/" + idx).Result;
+            }
+        }
+
+        public void UpdateAssignment(Assignment sc)
+        {
+            StreamDataForProject sm = new StreamDataForProject { name = sc.getName(), DeadLine = sc.getDeadline() };
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(sm);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PutAsync("Assignment/" + sc.getIdx(), content).Result;
+            }
+        }
 
 
     }

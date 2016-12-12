@@ -235,20 +235,7 @@ namespace Schooler.Class
             AddProject(sc, LoginedUser);
         }
 
-        public void UpdateAssignment(Assignment sc)
-        {
-            StreamDataForProject sm = new StreamDataForProject { name = sc.getName(), DeadLine = sc.getDeadline() };
-            using (client = new HttpClient())
-            {
-                string json = JsonConvert.SerializeObject(sm);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                client.BaseAddress = new Uri(baseUrl);
-                var r = client.PutAsync("Assignment/"+sc.getIdx(), content).Result;
-            }
-        }
-
-
+        
         private List<int> GetRelation(string id)
         {
             using (client = new HttpClient())
