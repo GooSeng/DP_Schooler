@@ -64,6 +64,7 @@
     <Compile Include="Views\FileCell.cs" />
     <Compile Include="Views\ProjectItemCell.cs" />
     <Compile Include="Views\ProjectItemPage.cs" />
+    <Compile Include="Views\TeamCell.cs" />
     <Compile Include="Views\TodoItemCell.cs" />
     <Compile Include="Views\TodoItemPage.cs" />
     <Compile Include="Views\TodoListView.cs" />

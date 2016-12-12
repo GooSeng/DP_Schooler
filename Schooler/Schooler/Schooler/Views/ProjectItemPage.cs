@@ -14,7 +14,8 @@ namespace Schooler.Views
 		int idx;
 		ProjectDao dao;
 		ScrollView scrollView;
-		
+		Entry teamEntry;
+
 		public ProjectItemPage(int _idx)
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
@@ -119,11 +120,11 @@ namespace Schooler.Views
 			{
 				HeightRequest = 100,
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(Label)),
+				ItemTemplate = new DataTemplate(typeof(TeamCell)),
 			};
 			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
 			var teamAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
-			var teamEntry = new Entry { WidthRequest = 300 };
+			teamEntry = new Entry { WidthRequest = 300 };
 			teamAddBtn.Clicked += TeamAddBtn_Clicked;
 
 			var teamLayout = new StackLayout
@@ -213,7 +214,8 @@ namespace Schooler.Views
 
 		private void TeamAddBtn_Clicked(object sender, EventArgs e)
 		{
-			// Todo: Team Member add
+			dao.AddTeam(teamEntry.Text);
+			this.OnAppearing();
 		}
 
 		private async void SaveButton_Clicked(object sender, EventArgs e)
