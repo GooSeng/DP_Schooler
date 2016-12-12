@@ -29,9 +29,21 @@ namespace Schooler.Views
 			manageUsers = dao.GetTeamUser();
 
 			managerEntry = new Picker();
+
 			foreach(var user in manageUsers)
 			{
 				managerEntry.Items.Add(user);
+
+			}
+			
+			if (idx != -1)
+			{
+				string manager = ((Todo)BindingContext).ManageUserId;
+				managerEntry.SelectedIndex = 
+					manageUsers.FindIndex(delegate (String str)
+					{
+						return str == manager;
+					});
 			}
 		}
 
@@ -68,7 +80,13 @@ namespace Schooler.Views
 				{
 					"Before Starting", "Proceeding", "END"
 				}
-			};		
+			};
+			if(idx != -1)
+			{
+				string tmp = ((Todo)BindingContext).Progress;
+
+				progressEntry.SelectedIndex = (tmp == "B") ? 0 : (tmp == "P") ? 1 : 2;
+			}
 
 			var managerLbl = new Label { Text = "Manager" };
 			getManagers();

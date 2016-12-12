@@ -86,7 +86,6 @@ namespace Schooler.Views
 				Children =
 				{
 					new Label { Text = "File list" },
-                    fileList,
                     new StackLayout
 					{
 						VerticalOptions = LayoutOptions.Center,
@@ -96,8 +95,8 @@ namespace Schooler.Views
 							fileUrlEntry,
 							fileAddBtn
 						}
-					}
-					
+					},
+					fileList,
 				}
 			};
 
@@ -120,7 +119,6 @@ namespace Schooler.Views
 				Orientation = StackOrientation.Vertical,
 				Children =
 				{
-                    commentList,
                     new Label { Text = "Comment list" },
 					new StackLayout
 					{
@@ -131,8 +129,8 @@ namespace Schooler.Views
 							commentEntry,
 							commentAddBtn
 						}
-					}
-					
+					},
+					commentList,
 				}
 			};
 
