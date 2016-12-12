@@ -98,7 +98,7 @@ namespace Schooler.Views
 			}
 			else			// edit item
 			{
-
+				dao.UpdateTodo(idx, item);
 			}
 
 			await Navigation.PopAsync();
@@ -113,7 +113,7 @@ namespace Schooler.Views
 		{
 			var item = (Schooler.Class.Todo)BindingContext;
 
-			// Todo: detele todo
+			dao.DeleteTodo(idx);
 
 			await Navigation.PopAsync();
 		}
