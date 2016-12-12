@@ -15,7 +15,6 @@ namespace Schooler
         {
          
             AssignmentDao ad = new AssignmentDao(9);
-
             Class.UserDao d = new Class.UserDao();
 
 			Class.UserDao dao = new Class.UserDao();

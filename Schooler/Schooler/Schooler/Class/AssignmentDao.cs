@@ -48,15 +48,6 @@ namespace Schooler.Class
 
         }
 
-        public void DeleteComment(int idx)
-        {
-            using (client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseUrl);
-                var r = client.DeleteAsync("Comment/"+idx).Result;
-            }
-        }
-
         private async Task<byte[]> GetFileByte(string url)
         {
             var file = await PCLStorage.FileSystem.Current.GetFileFromPathAsync(url);
@@ -71,18 +62,22 @@ namespace Schooler.Class
 
         }
 
- 
-
-        private static Stream GenerateStreamFromString(string s)
+        public void DownloadFile(int idx)
         {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("File/" + idx).Result;
+                SaveFileByte(result);
+                
+            }
         }
 
+        private async void SaveFileByte(string bytes)
+        {
+            var file = await PCLStorage.FileSystem.Current.LocalStorage.CreateFileAsync("file",CreationCollisionOption.GenerateUniqueName);
+            await file.WriteAllTextAsync(bytes);
+        }
 
         public List<File> GetFileList()
         {
@@ -122,6 +117,15 @@ namespace Schooler.Class
             }
         }
 
+        public void DeleteComment(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("Comment/" + idx).Result;
+            }
+        }
+
         //public bool DeleteComment(int commentIdx)
         //{
         //    // TODO implement here
@@ -131,7 +135,7 @@ namespace Schooler.Class
 
         //-----------------------과제 관련-----------------------//
         //---------------------------------------------------------//
-  
+
 
         public void Delete()
         {
