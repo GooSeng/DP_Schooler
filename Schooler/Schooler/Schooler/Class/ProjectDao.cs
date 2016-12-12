@@ -29,7 +29,19 @@ namespace Schooler.Class
             }
         }
 
-        public void AddTodo(Todo item)
+        public void AddTodo(int todoIdx,Todo item)
+        {
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PutAsync("Todo/"+todoIdx, content).Result;
+            }
+        }
+
+        public void UpdateTodo(Todo item)
         {
             using (client = new HttpClient())
             {
@@ -40,6 +52,16 @@ namespace Schooler.Class
                 var r = client.PostAsync("Todo/", content).Result;
             }
         }
+
+        public void DeleteTodo(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("Todo/"+idx).Result;
+            }
+        }
+
 
         public void AddTeam(string userId)
         {

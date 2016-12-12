@@ -13,8 +13,8 @@ namespace Schooler
     {
         public App()
         {
+         
             AssignmentDao ad = new AssignmentDao(9);
-            ad.GetCommentList();
             Class.UserDao d = new Class.UserDao();
 
 			Class.UserDao dao = new Class.UserDao();

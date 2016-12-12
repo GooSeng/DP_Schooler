@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using PCLStorage;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -24,11 +26,16 @@ namespace Schooler.Class
         //-----------------------파일 관련-----------------------//
         //---------------------------------------------------------//
 
-        public void UploadFile(File file)
+        public async Task<bool> UploadFile(File file)
         {
             FileWithByte ByteFile = new FileWithByte { projectIdx = file.projectIdx, name = file.name, uploadUserId = file.uploadUserId };
-            ByteFile.data = GetFileByte(file.url);
+            ByteFile.data = await GetFileByte(file.url);
 
+            if(ByteFile.data.Length > 1024)
+            {
+                return false;
+            }
+           
             using (client = new HttpClient())
             {
                 string json = JsonConvert.SerializeObject(ByteFile);
@@ -37,30 +44,57 @@ namespace Schooler.Class
                 client.BaseAddress = new Uri(baseUrl);
                 var r = client.PostAsync("File/", content).Result;
             }
+            return true;
 
         }
 
-        public void DeleteComment(int idx)
+        private async Task<byte[]> GetFileByte(string url)
+        {
+            var file = await PCLStorage.FileSystem.Current.LocalStorage.GetFileAsync(url);
+            using (Stream fileStream = await file.OpenAsync(FileAccess.Read))
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    return memoryStream.ToArray();
+                }
+            }
+
+        }
+
+        internal void DeleteFile(int idx)
         {
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var r = client.DeleteAsync("Comment/"+idx).Result;
+                var r = client.DeleteAsync("File/" + idx).Result;
             }
         }
 
-        private byte[] GetFileByte(string url)
+        public void DownloadFile(int idx, string name)
         {
-            return null;
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var result = client.GetStringAsync("File/" + idx).Result;
+                SaveFileByte(result, name);
+                
+            }
         }
 
+        private async void SaveFileByte(string bytes, string name)
+        {
+            var file = await PCLStorage.FileSystem.Current.LocalStorage.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
+            await file.WriteAllTextAsync(bytes);
+           
+        }
 
         public List<File> GetFileList()
         {
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var result = client.GetStringAsync("RelationProjectAndFile/" + idx).Result;
+                var result = client.GetStringAsync("RelationProjectFile/" + idx).Result;
                 var ScheduleList = JsonConvert.DeserializeObject<List<File>>(result);
                 return ScheduleList;
             }
@@ -93,6 +127,15 @@ namespace Schooler.Class
             }
         }
 
+        public void DeleteComment(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("Comment/" + idx).Result;
+            }
+        }
+
         //public bool DeleteComment(int commentIdx)
         //{
         //    // TODO implement here
@@ -102,7 +145,7 @@ namespace Schooler.Class
 
         //-----------------------과제 관련-----------------------//
         //---------------------------------------------------------//
-  
+
 
         public void Delete()
         {
