@@ -50,8 +50,11 @@ namespace Schooler.Pages
 			layout.Children.Add(addBtn);
 			layout.Children.Add(listView);
 			layout.VerticalOptions = LayoutOptions.FillAndExpand;
-			
-			Content = layout;
+
+			ScrollView tmp = new ScrollView();
+			tmp.Content = layout;
+
+			Content = tmp;
 		}
 
 		private async void AddBtn_Clicked(object sender, EventArgs e)

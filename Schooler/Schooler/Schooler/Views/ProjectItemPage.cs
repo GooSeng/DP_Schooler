@@ -13,6 +13,7 @@ namespace Schooler.Views
 	{
 		int idx;
 		ProjectDao dao;
+		ScrollView scrollView;
 		
 		public ProjectItemPage(int _idx)
 		{
@@ -49,8 +50,9 @@ namespace Schooler.Views
 			// File List 
 			var fileList = new ListView
 			{
+				HeightRequest = 100,
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
+			ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
 			var fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
@@ -71,13 +73,19 @@ namespace Schooler.Views
 							fileAddBtn
 						}
 					},
-					fileList,
+					new StackLayout
+					{
+						VerticalOptions = LayoutOptions.Fill,
+						HorizontalOptions = LayoutOptions.Fill,
+						Children = { fileList }
+					}
 				}
 			};
 
 			// Comment List
 			var commentList = new ListView
 			{
+				HeightRequest = 100,
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
@@ -109,8 +117,9 @@ namespace Schooler.Views
 			// Team List
 			var teamList = new ListView
 			{
+				HeightRequest = 100,
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(Label))
+				ItemTemplate = new DataTemplate(typeof(Label)),
 			};
 			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
 			var teamAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
@@ -138,7 +147,16 @@ namespace Schooler.Views
 			};
 
 			// Todo List
-			TodoListView todolistView = new TodoListView();
+			TodoListView todolistView = new TodoListView(idx);
+			todolistView.BindingContext = dao.GetTodo();
+			var todoLayout = new StackLayout
+			{
+				Children =
+				{
+					new Label { Text = "Todo list" },
+					todolistView
+				}
+			};
 
 			// Buttons
 			var saveButton = new Button { Text = "Save" };
@@ -164,9 +182,9 @@ namespace Schooler.Views
 			{
 				layout.Children.Add(fileLayout);
 				layout.Children.Add(commentLayout);
-				layout.Children.Add(todolistView);
+				layout.Children.Add(todoLayout);
 
-				if (isTeamSwitch.IsToggled)
+				if (((Project)this.BindingContext).isTeam)
 					layout.Children.Add(teamLayout);
 			}
 			layout.Children.Add(saveButton);
@@ -176,7 +194,10 @@ namespace Schooler.Views
 				layout.Children.Add(deleteButton);
 			}
 
-			Content = layout;
+			scrollView = new ScrollView();
+			scrollView.Content = layout;
+
+			Content = scrollView;
 		}
 		
 		private void FileAddBtn_Clicked(object sender, EventArgs e)

@@ -18,22 +18,22 @@ namespace Schooler.Views
 				HorizontalOptions = LayoutOptions.StartAndExpand
 			};
 
-			label.SetBinding(Label.TextProperty, "name");
+			label.SetBinding(Label.TextProperty, "Content");
 
-			var tick = new Image
+			var typeLbl = new Label
 			{
-				Source = FileImageSource.FromFile("check.png"),
-				HorizontalOptions = LayoutOptions.End
+				VerticalTextAlignment = TextAlignment.Center,
+				Text = " is Essencial",
+				TextColor = Color.Silver
 			};
-
-			tick.SetBinding(Image.IsVisibleProperty, "isEssencial");
+			typeLbl.SetBinding(Label.IsVisibleProperty, "isEssencial");
 
 			var layout = new StackLayout
 			{
 				Padding = new Thickness(20, 0, 20, 0),
 				Orientation = StackOrientation.Horizontal,
 				HorizontalOptions = LayoutOptions.StartAndExpand,
-				Children = { label, tick }
+				Children = { label, typeLbl }
 			};
 
 			View = layout;

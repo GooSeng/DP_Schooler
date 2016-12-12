@@ -8,7 +8,7 @@ namespace Schooler.Class
 {
     class Todo
     {
-        // 인덱 
+		// 인덱 
         public int Idx { get; set; }
 
         // 프로젝트 인덱 
@@ -34,5 +34,20 @@ namespace Schooler.Class
 
         // 진행 
         public string Progress { get; set; }
+
+		
+		public Todo(int _pIdx)
+		{
+			Idx = -1;
+			ProjectIdx = _pIdx;
+
+			Progress = null;
+			IsEssential = true;
+			DeadLine = DateTime.Now;
+			Content = null;
+			Name = null;
+			UploadTime = DateTime.Now;
+			ManageUserId = null;
+		}
     }
 }
