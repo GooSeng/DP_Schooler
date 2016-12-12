@@ -14,11 +14,24 @@ namespace Schooler.Views
 		int idx;
 		ProjectDao dao;
 		Picker progressEntry;
+		Picker managerEntry;
+		List<String> manageUsers;
 
 		public TodoItemPage()
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
 
+		}
+
+		private void getManagers()
+		{
+			manageUsers = dao.GetTeamUser();
+
+			managerEntry = new Picker();
+			foreach(var user in manageUsers)
+			{
+				managerEntry.Items.Add(user);
+			}
 		}
 
 		protected override void OnAppearing()
@@ -33,6 +46,10 @@ namespace Schooler.Views
 			var nameLbl = new Label { Text = "Name" };
 			var nameEntry = new Entry();
 			nameEntry.SetBinding(Entry.TextProperty, "Name");
+
+			var contentLbl = new Label { Text = "Content" };
+			var contentEntry = new Editor();
+			contentEntry.SetBinding(Editor.TextProperty, "Content");
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
@@ -50,11 +67,9 @@ namespace Schooler.Views
 					"Before Starting", "Proceeding", "END"
 				}
 			};		
-//			progressEntry.SetBinding(Picker.SelectedIndexProperty, "Progress");
 
 			var managerLbl = new Label { Text = "Manager" };
-			var managerEntry = new Entry();
-			managerEntry.SetBinding(Entry.TextProperty, "managerUser");
+			getManagers();
 
 			var saveButton = new Button { Text = "Save" };
 			saveButton.Clicked += SaveButton_Clicked;
@@ -71,6 +86,7 @@ namespace Schooler.Views
 //				Padding = new Thickness(20),
 				Children = {
 					nameLbl, nameEntry,
+					contentLbl, contentEntry,
 					deadlineLbl, deadlinePicker,
 					essentialLbl, essentialEntry,
 					progressLbl, progressEntry,
@@ -91,8 +107,9 @@ namespace Schooler.Views
 			var item = (Schooler.Class.Todo)BindingContext;
 
 			item.Progress = progressEntry.SelectedIndex == 0 ? "B" : progressEntry.SelectedIndex == 1 ? "P" : "E";
+			item.ManageUserId = manageUsers[managerEntry.SelectedIndex];
 
-			if(idx == -1)   // new Item
+			if (idx == -1)   // new Item
 			{
 				dao.AddTodo(item);
 			}

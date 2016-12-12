@@ -18,15 +18,14 @@ namespace Schooler.Views
 				HorizontalOptions = LayoutOptions.StartAndExpand
 			};
 
-			label.SetBinding(Label.TextProperty, "Content");
+			label.SetBinding(Label.TextProperty, "Name");
 
 			var typeLbl = new Label
 			{
 				VerticalTextAlignment = TextAlignment.Center,
-				Text = " is Essencial",
 				TextColor = Color.Silver
 			};
-			typeLbl.SetBinding(Label.IsVisibleProperty, "isEssencial");
+			typeLbl.SetBinding(Label.TextProperty, "Content");
 
 			var layout = new StackLayout
 			{
