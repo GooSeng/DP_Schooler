@@ -65,10 +65,29 @@ namespace Schooler.Class
             
         }
 
+        protected class Relation
+        {
+            public string UserId { get; set; }
+            public string ProjectIdx { get; set; }
+        }
 
-        //-----------------------그대로 사용가능한 클래스-----------------------//
+        protected class FileWithByte
+        {
+
+            // 파일이 
+            public string name { get; set; }
+
+            // 프로젝트 인덱 
+            public int projectIdx { get; set; }
+
+            // 업로드유 
+            public string uploadUserId { get; set; }
+
+            // Stream
+            public byte[] data { get; set; }
 
 
+        }
 
 
     }

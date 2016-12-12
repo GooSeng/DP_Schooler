@@ -42,6 +42,7 @@
     <Compile Include="Class\File.cs" />
     <Compile Include="Class\IDao.cs" />
     <Compile Include="Class\Project.cs" />
+    <Compile Include="Class\ProjectDao.cs" />
     <Compile Include="Class\Schedule.cs" />
     <Compile Include="Class\Todo.cs" />
     <Compile Include="Class\UserDao.cs" />

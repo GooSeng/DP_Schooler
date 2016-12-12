@@ -13,20 +13,37 @@ namespace Schooler.Class
         protected int idx;
         protected HttpClient client;
         protected string baseUrl = "https://schoolerAPIServer.azurewebsites.net/api/";
+        protected string thisUrl;
 
         public AssignmentDao(int idx)
         {
             this.idx = idx;
+            thisUrl = "Assignment";
         }
 
         //-----------------------파일 관련-----------------------//
         //---------------------------------------------------------//
 
-        //public bool UploadFile(File file)
-        //{
-        //    // TODO implement here
-        //    return False;
-        //}
+        public void UploadFile(File file)
+        {
+            FileWithByte ByteFile = new FileWithByte { projectIdx = file.projectIdx, name = file.name, uploadUserId = file.uploadUserId };
+            ByteFile.data = GetFileByte(file.url);
+
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(ByteFile);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("File/", content).Result;
+            }
+
+        }
+
+        private byte[] GetFileByte(string url)
+        {
+            return null;
+        }
 
 
         public List<File> GetFileList()
@@ -43,11 +60,17 @@ namespace Schooler.Class
         //-----------------------코멘트 관련-----------------------//
         //---------------------------------------------------------//
 
-        //public bool UploadComment(Comment comment)
-        //{
-        //    // TODO implement here
-        //    return False;
-        //}
+        public void UploadComment(Comment comment)
+        {
+             using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(comment);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("Comment/", content).Result;
+            }
+        }
 
 
         public List<Comment> GetCommentList()
@@ -70,16 +93,18 @@ namespace Schooler.Class
 
         //-----------------------과제 관련-----------------------//
         //---------------------------------------------------------//
-        public void DeleteAssigment()
+  
+
+        public void Delete()
         {
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var result = client.DeleteAsync("Assignment/" + idx).Result;
+                var result = client.DeleteAsync(thisUrl + "/" + idx).Result;
             }
         }
 
-        public void UpdateAssignment(Assignment sc)
+        public void Update(Assignment sc)
         {
             StreamDataForProject sm = new StreamDataForProject { name = sc.getName(), DeadLine = sc.getDeadline() };
             using (client = new HttpClient())
@@ -88,7 +113,7 @@ namespace Schooler.Class
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 client.BaseAddress = new Uri(baseUrl);
-                var r = client.PutAsync("Assignment/" + sc.getIdx(), content).Result;
+                var r = client.PutAsync(thisUrl + "/" + sc.getIdx(), content).Result;
             }
         }
 

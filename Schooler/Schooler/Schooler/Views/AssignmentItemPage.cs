@@ -102,7 +102,8 @@ namespace Schooler.Views
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
 			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
-			commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
+            commentList.ItemsSource = dao.GetCommentList();
+            commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			commentEntry = new Entry { WidthRequest = 300 };
 			commentAddBtn.Clicked += CommentAddBtn_Clicked;
 
