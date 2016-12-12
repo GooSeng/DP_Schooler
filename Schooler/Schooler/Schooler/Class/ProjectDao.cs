@@ -29,7 +29,7 @@ namespace Schooler.Class
             }
         }
 
-        public void AddTodo(int todoIdx,Todo item)
+        public void UpdateTodo(int todoIdx,Todo item)
         {
             using (client = new HttpClient())
             {
@@ -41,7 +41,7 @@ namespace Schooler.Class
             }
         }
 
-        public void UpdateTodo(Todo item)
+        public void AddTodo(Todo item)
         {
             using (client = new HttpClient())
             {
