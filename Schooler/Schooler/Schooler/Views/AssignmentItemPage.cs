@@ -117,7 +117,8 @@ namespace Schooler.Views
 				Orientation = StackOrientation.Vertical,
 				Children =
 				{
-					new Label { Text = "Comment list" },
+                    commentList,
+                    new Label { Text = "Comment list" },
 					new StackLayout
 					{
 						VerticalOptions = LayoutOptions.Center,
@@ -127,8 +128,8 @@ namespace Schooler.Views
 							commentEntry,
 							commentAddBtn
 						}
-					},
-					commentList,
+					}
+					
 				}
 			};
 
@@ -175,7 +176,7 @@ namespace Schooler.Views
 		private void CommentAddBtn_Clicked(object sender, EventArgs e)
 		{
             UserDao userdao = new UserDao();
-            var item = (Schooler.Class.Comment)BindingContext;
+            var item = new Comment { comment = commentEntry.Text};
             item.uploadUserId = userdao.GetLoginedUser();
             item.projectIdx = idx;
 

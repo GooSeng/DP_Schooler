@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schooler.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -10,13 +11,16 @@ namespace Schooler.Views
 {
 	public class CommentCell : ViewCell
 	{
+        int idx;
 		public CommentCell()
 		{
-			var uploaderLb = new Label();
-			uploaderLb.SetBinding(Label.TextProperty, "uploadUser");
+            //idx에가다 값만 들어가면댐
+
+            var uploaderLb = new Label();
+			uploaderLb.SetBinding(Label.TextProperty, "uploadUserId");
 
 			var contentLb = new Label();
-			contentLb.SetBinding(Label.TextProperty, "contents");
+			contentLb.SetBinding(Label.TextProperty, "comment");
 
 			var deleteBtn = new Button { Text = "-" };
 			deleteBtn.Clicked += DeleteBtn_Clicked;
@@ -33,6 +37,8 @@ namespace Schooler.Views
 
 		private void DeleteBtn_Clicked(object sender, EventArgs e)
 		{
+            AssignmentDao dao = new AssignmentDao(-1);
+            dao.DeleteComment(idx);
 			// Todo: Comment delete
 		}
 	}

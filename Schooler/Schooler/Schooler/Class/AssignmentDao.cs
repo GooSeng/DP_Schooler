@@ -40,6 +40,15 @@ namespace Schooler.Class
 
         }
 
+        public void DeleteComment(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("Comment/"+idx).Result;
+            }
+        }
+
         private byte[] GetFileByte(string url)
         {
             return null;
