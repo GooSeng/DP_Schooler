@@ -27,7 +27,6 @@ namespace Schooler.Views
 
 		public CommentCell()
 		{
-			//idx에가다 값만 들어가면댐
 			var uploaderLb = new Label();
 			uploaderLb.SetBinding(Label.TextProperty, "uploadUserId");
             uploaderLb.TextColor = Color.Navy;

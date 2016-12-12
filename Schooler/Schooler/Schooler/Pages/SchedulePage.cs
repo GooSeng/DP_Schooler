@@ -6,19 +6,21 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace Schooler
+namespace Schooler.Pages
 {
-	public class CalendarView : ContentPage
+	public class SchedulePage : ContentPage
 	{
-		enum dayWeek { SUN, MON, TUE, WED, THU, FRI, SAT}
+		#region variables
+
+		enum dayWeek { SUN, MON, TUE, WED, THU, FRI, SAT }
 		public DateTime selectDate { get; set; }
 		Class.UserDao dao = new Class.UserDao();
 		ListView listView = new ListView
 		{
-			RowHeight = 40,
 			ItemTemplate = new DataTemplate(typeof(Views.ScheduleCell)),
-			BackgroundColor = Color.Gray
+			IsEnabled = false,
 		};
+		Label selectedDateLbl = new Label { Text = "", FontAttributes = FontAttributes.Bold, Margin = 10 };
 
 		Button beforeBtn = new Button()
 		{
@@ -41,8 +43,20 @@ namespace Schooler
 			HorizontalOptions = LayoutOptions.FillAndExpand,
 		};
 
-		public CalendarView(DateTime date)
+
+		#endregion
+
+		bool isChangedMonth;
+
+		public SchedulePage()
 		{
+			selectDate = DateTime.Now;
+
+			Title = "Schedule";
+
+			isChangedMonth = true;
+
+
 			// set Button
 			beforeBtn.Clicked += BeforeBtn_Clicked;
 			nextBtn.Clicked += NextBtn_Clicked;
@@ -56,10 +70,22 @@ namespace Schooler
 				colDef.Add(new ColumnDefinition { Width = new GridLength(20, GridUnitType.Star) });
 			calenderGrid.RowDefinitions = rowDef;
 			calenderGrid.ColumnDefinitions = colDef;
+		}
 
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+
+			Content = null;
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			
 			// set variables
-			selectDate = date;
-			changedMonth();
+			if(isChangedMonth)
+				changedMonth();
 
 			Grid topLayout = new Grid
 			{
@@ -79,27 +105,13 @@ namespace Schooler
 			topLayout.Children.Add(beforeBtn, 0, 0);
 			topLayout.Children.Add(monthLB, 1, 0);
 			topLayout.Children.Add(nextBtn, 2, 0);
-			
+
 			StackLayout layout = new StackLayout
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				Orientation = StackOrientation.Vertical,
 				Children =
 				{
-					/**
-					new StackLayout
-					{
-						HorizontalOptions = LayoutOptions.CenterAndExpand,
-						Orientation = StackOrientation.Horizontal,
-						Children =
-						{
-							beforeBtn,
-							monthLB,
-							nextBtn
-						}
-					},
-					 */
-
 					topLayout,
 					calenderGrid
 				}
@@ -110,7 +122,6 @@ namespace Schooler
 				Text = "+"
 			};
 			addBtn.Clicked += AddBtn_Clicked;
-
 			View view = new ScrollView
 			{
 				Content = new StackLayout
@@ -118,8 +129,17 @@ namespace Schooler
 					Children =
 					{
 						layout,
+						new StackLayout
+						{
+							Orientation = StackOrientation.Horizontal,
+							VerticalOptions = LayoutOptions.Center,
+							Children =
+							{
+								selectedDateLbl,
+								addBtn,
+							}
+						},
 						listView,
-						addBtn,
 					}
 				}
 			};
@@ -127,15 +147,16 @@ namespace Schooler
 			this.Padding = new Thickness(10, 5, 10, 5);
 			this.Content = view;
 		}
-
-		private void AddBtn_Clicked(object sender, EventArgs e)
+		
+		private async void AddBtn_Clicked(object sender, EventArgs e)
 		{
 			// Todo: Add Schedule
-		}
+			var newItem = new Class.Schedule(selectDate);
+			var page = new Views.ScheduleItemPage();
+			page.BindingContext = (Class.Schedule)newItem;
 
-		private void Tgr_Tapped(object sender, EventArgs e)
-		{
-			calenderGrid.BackgroundColor = Color.Blue;
+			isChangedMonth = true;
+			await Navigation.PushAsync(page);
 		}
 
 		private void BeforeBtn_Clicked(object sender, EventArgs e)
@@ -155,7 +176,7 @@ namespace Schooler
 			monthLB.Text = selectDate.Year.ToString() + "/" + selectDate.Month.ToString();
 
 			calenderGrid.Children.Clear();
-			
+
 			// set dayinweek label
 			for (dayWeek i = 0; (int)i < 7; i++)
 			{
@@ -164,43 +185,64 @@ namespace Schooler
 			// set days
 			int startM, endM;
 			int[] map = getCalendar(out startM, out endM);
-			for (int i=0; i<startM; i++)
+			for (int i = 0; i < startM; i++)
 			{
-				calenderGrid.Children.Add(new Label { Text = map[i].ToString(), TextColor = Color.Silver }, i%7, i/7+1);
-			//	var scheduleItems = new listDa Class.Schedule();
-			//	calenderGrid.Children.Add(new Views.CalenderItemCell(scheduleItem), i % 7, i / 7 + 1);
+				calenderGrid.Children.Add(new Label { Text = map[i].ToString(), TextColor = Color.Silver, HorizontalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.Center }, i % 7, i / 7 + 1);
+				//	var scheduleItems = new listDa Class.Schedule();
+				//	calenderGrid.Children.Add(new Views.CalenderItemCell(scheduleItem), i % 7, i / 7 + 1);
 			}
 			List<Class.Schedule> list;
 			for (int i = startM; i < endM; i++)
 			{
-				list = dao.GetSchedule(selectDate.Year, selectDate.Month, i);
+				list = dao.GetSchedule(selectDate.Year, selectDate.Month, map[i]);
 
 				var btn = new Button
 				{
-					Text = map[i].ToString()					
+					Text = map[i].ToString()
 				};
-				if (list == null)
-					btn.BackgroundColor = Color.Blue;
+				if (list.Count > 0)
+					btn.BackgroundColor = Color.Silver;
+
 				btn.Clicked += Btn_Clicked;
 
 				calenderGrid.Children.Add(btn, i % 7, i / 7 + 1);
 			}
 			for (int i = endM; i < 42; i++)
 			{
-				calenderGrid.Children.Add(new Label { Text = map[i].ToString(), TextColor = Color.Silver }, i % 7, i / 7 + 1);
+				calenderGrid.Children.Add(new Label { Text = map[i].ToString(), TextColor = Color.Silver, HorizontalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.Center }, i % 7, i / 7 + 1);
+			}
+
+			isChangedMonth = false;
+		}
+		
+		public static readonly BindableProperty listProperty =
+			BindableProperty.Create("list", typeof(List<Class.Schedule>), typeof(SchedulePage), null, BindingMode.TwoWay);
+		public List<Class.Schedule> list
+		{
+			get
+			{
+				return (List<Class.Schedule>)base.GetValue(SchedulePage.listProperty);
+			}
+			set
+			{
+				base.SetValue(SchedulePage.listProperty, value);
 			}
 		}
 
 		private void Btn_Clicked(object sender, EventArgs e)
 		{
 			int day = Int32.Parse(((Button)sender).Text);
+			selectDate = new DateTime(selectDate.Year, selectDate.Month, day);
+			selectedDateLbl.Text = selectDate.ToString("yyyy-MM-dd");
+			list = dao.GetSchedule(selectDate.Year, selectDate.Month, day);
+			
+			listView.ItemsSource = list;
+			listView.BindingContext = (List<Class.Schedule>)list;
+//			listView.SetBinding(ListView.ItemsSourceProperty, "list");
+//			listView.SetBinding(ListView.ItemsSourceProperty, Binding.Create<Class.Schedule>(list[day], BindingMode.OneWay));
 
-			List<Class.Schedule> list = dao.GetSchedule(selectDate.Year, selectDate.Month, day);
-
-			if(list != null)
-			{
-				listView.ItemsSource = list;
-			}
+			if (list.Count > 0)
+				OnAppearing();
 		}
 
 		private int[] getCalendar(out int startM, out int endM)
@@ -230,6 +272,5 @@ namespace Schooler
 			}
 			return map;
 		}
-
 	}
 }

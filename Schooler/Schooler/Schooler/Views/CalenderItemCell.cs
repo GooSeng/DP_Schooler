@@ -5,22 +5,20 @@ using System.Reflection.Emit;
 using System.Text;
 
 using Xamarin.Forms;
+using Schooler.Class;
 
 namespace Schooler.Views
 {
 	public class CalenderItemCell : ContentView
 	{
-		public DateTime date;
-		public CalenderItemCell(Class.Schedule schedule)
+		public CalenderItemCell(int day, bool isSchduled)
 		{
 			var label = new Label
 			{
 				VerticalTextAlignment = TextAlignment.Center,
 				HorizontalOptions = LayoutOptions.Center,
-				Text = schedule.day.Day.ToString()
+				Text = day.ToString()
 			};
-
-//			label.SetBinding(Label.TextProperty, "date");
 
 			var box = new BoxView
 			{
@@ -28,18 +26,18 @@ namespace Schooler.Views
 				HeightRequest = 5,
 				WidthRequest = 5,
 				HorizontalOptions = LayoutOptions.Center,
-				VerticalOptions = LayoutOptions.Center
+				VerticalOptions = LayoutOptions.Center,
+				IsVisible = isSchduled
 			};
-
-			box.SetBinding(BoxView.IsVisibleProperty, "Visible");
+//			box.SetBinding(BoxView.IsVisibleProperty, "Visible");
 
 			var layout = new StackLayout
 			{
 				Children = { label, box }
 			};
-//			View = layout;
+
 			Content = layout;
-//			Content = new Label { Text = "Hello View" };
 		}
+		
 	}
 }

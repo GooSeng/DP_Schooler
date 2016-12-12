@@ -16,6 +16,10 @@ namespace Schooler.Class
 
         public string place { get; set; }
 
+		public Schedule(DateTime _date)
+		{
+			day = _date;
+		}
 
     }
 }

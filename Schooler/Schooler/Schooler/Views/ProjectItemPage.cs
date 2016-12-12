@@ -67,7 +67,8 @@ namespace Schooler.Views
             };
             fileList.ItemTemplate.SetBinding(FileCell.idxProperty, "Idx");
             fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
-            fileList.ItemsSource = dao.GetFileList();
+			if(idx != -1)
+				fileList.ItemsSource = dao.GetFileList();
 			fileList.ItemSelected += FileList_ItemSelected;
             fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
             fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
@@ -102,7 +103,8 @@ namespace Schooler.Views
 			};
             commentList.ItemTemplate.SetBinding(CommentCell.idxProperty, "Idx");
             commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
-            commentList.ItemsSource = dao.GetCommentList();
+			if(idx != -1)
+				commentList.ItemsSource = dao.GetCommentList();
 			commentList.RefreshCommand = new Command(() =>
 			{
 				commentList.ItemsSource = dao.GetCommentList();
@@ -142,7 +144,8 @@ namespace Schooler.Views
 				RowHeight = 40,
 //				ItemTemplate = new DataTemplate(typeof(TeamCell)),
 			};
-			teamList.ItemsSource = dao.GetTeamUser();
+			if(idx != -1)
+				teamList.ItemsSource = dao.GetTeamUser();
 //			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
 			var teamAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			teamEntry = new Entry { WidthRequest = 300 };
