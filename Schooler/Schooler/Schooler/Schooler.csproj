@@ -56,7 +56,6 @@
     <Compile Include="Pages\SettingPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CommentCell.cs" />
-    <Compile Include="Views\DatePickerCell.cs" />
     <Compile Include="Views\FileCell.cs" />
     <Compile Include="Views\ProjectItemCell.cs" />
     <Compile Include="Views\ProjectItemPage.cs" />

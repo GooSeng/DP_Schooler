@@ -13,16 +13,7 @@ namespace Schooler
     {
         public App()
         {
-         
-            AssignmentDao ad = new AssignmentDao(9);
-            Class.UserDao d = new Class.UserDao();
-
-			Class.UserDao dao = new Class.UserDao();
-			dao.SignIn("id05", "password05");
-			//MainPage = new NavigationPage(new LoginPage());
-			MainPage = new NavigationPage(new MainPage());
-//            MainPage = new NavigationPage(new LoginPage());
-			   //         MainPage = new LoginPage();
+			MainPage = new NavigationPage(new LoginPage());
 		}
 
 		protected override void OnStart()

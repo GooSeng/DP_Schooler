@@ -140,7 +140,6 @@ namespace Schooler.Views
             // Team List
             var teamList = new ListView
 			{
-				HeightRequest = 100,
 				RowHeight = 40,
 //				ItemTemplate = new DataTemplate(typeof(TeamCell)),
 			};

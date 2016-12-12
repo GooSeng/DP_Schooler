@@ -180,7 +180,7 @@ namespace Schooler.Pages
 			// set dayinweek label
 			for (dayWeek i = 0; (int)i < 7; i++)
 			{
-				calenderGrid.Children.Add(new Button { Text = i.ToString(), HorizontalOptions = LayoutOptions.Center }, (int)i, 0);
+				calenderGrid.Children.Add(new Label { Text = i.ToString(), HorizontalOptions = LayoutOptions.Center }, (int)i, 0);
 			}
 			// set days
 			int startM, endM;
@@ -198,7 +198,8 @@ namespace Schooler.Pages
 
 				var btn = new Button
 				{
-					Text = map[i].ToString()
+					Text = map[i].ToString(),
+					BackgroundColor = Color.White
 				};
 				if (list.Count > 0)
 					btn.BackgroundColor = Color.Silver;

@@ -29,18 +29,14 @@ namespace Schooler.Pages
 
             var setting = new TableView
             {
-                Root = new TableRoot
+				Root = new TableRoot
                 {
                     new TableSection("User Info")
                     {
                         new TextCell
-                        {
-                            Text = dao.GetLoginedUser()
+						{
+							Text = dao.GetLoginedUser()
                         }
-					},
-					new TableSection("Notice")
-					{
-
 					}
 				}
 			};
@@ -49,7 +45,6 @@ namespace Schooler.Pages
 //                VerticalOptions = LayoutOptions.Center,
 
                 Children = {
-                    new Label { Text = "SettingPage" },
                     setting,
 					signOutBtn
                 }

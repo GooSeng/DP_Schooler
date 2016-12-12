@@ -20,7 +20,6 @@ namespace Schooler.Views
 			base.OnParentSet();
 			listView = new ListView
 			{
-				HeightRequest = 100,
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(TodoItemCell)),
 				IsPullToRefreshEnabled = true

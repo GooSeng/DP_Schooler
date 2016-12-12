@@ -42,10 +42,6 @@ namespace Schooler.Pages
                 VerticalOptions = LayoutOptions.Center,
 
                 Children = {
-                    new Label {
-                        Text = "Login Page",
-                        HorizontalOptions = LayoutOptions.Center,
-                   },
                     id,
                     pw,
                     loginBtn,
