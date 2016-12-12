@@ -78,7 +78,6 @@ namespace Schooler.Views
                 Children =
                 {
                     new Label { Text = "File list" },
-                    fileList,
                     new StackLayout
                     {
                         VerticalOptions = LayoutOptions.Center,
@@ -88,21 +87,27 @@ namespace Schooler.Views
                             fileUrlEntry,
                             fileAddBtn
                         }
-                    }
-
-                }
-            };
+                    },
+					fileList,
+				}
+			};
 
             // Comment List
             commentList = new ListView
             {
                 RowHeight = 40,
-                ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
-            };
+                ItemTemplate = new DataTemplate(typeof(Views.CommentCell)),
+				IsPullToRefreshEnabled = true
+			};
             commentList.ItemTemplate.SetBinding(CommentCell.idxProperty, "Idx");
             commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
             commentList.ItemsSource = dao.GetCommentList();
-            commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
+			commentList.RefreshCommand = new Command(() =>
+			{
+				commentList.ItemsSource = dao.GetCommentList();
+				commentList.IsRefreshing = false;
+			});
+			commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
             commentEntry = new Entry { WidthRequest = 300 };
             commentEntry.SetBinding(Entry.TextProperty, "comment");
             commentAddBtn.Clicked += CommentAddBtn_Clicked;
@@ -112,9 +117,8 @@ namespace Schooler.Views
                 Orientation = StackOrientation.Vertical,
                 Children =
                 {
-                    commentList,
                     new Label { Text = "Comment list" },
-                    new StackLayout
+					new StackLayout
                     {
                         VerticalOptions = LayoutOptions.Center,
                         Orientation = StackOrientation.Horizontal,
@@ -123,10 +127,10 @@ namespace Schooler.Views
                             commentEntry,
                             commentAddBtn
                         }
-                    }
-
-                }
-            };
+                    },
+					commentList,
+				}
+			};
 
 
             // Team List
@@ -233,7 +237,9 @@ namespace Schooler.Views
                 await DisplayAlert("Good", "File Upload", "OK");
             else
                 await DisplayAlert("Error", "File size error, Please Check the File Size", "Ok");
-        }
+
+			this.OnAppearing();
+		}
 
         private void CommentAddBtn_Clicked(object sender, EventArgs e)
         {
@@ -244,6 +250,7 @@ namespace Schooler.Views
 
             dao.UploadComment(item);
 
+			this.OnAppearing();
         }
 
         private void TeamAddBtn_Clicked(object sender, EventArgs e)
