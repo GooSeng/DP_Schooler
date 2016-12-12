@@ -12,6 +12,7 @@ namespace Schooler.Views
 	public class TodoItemPage : ContentPage
 	{
 		int idx;
+		int projectIdx;
 		ProjectDao dao;
 		Picker progressEntry;
 		Picker managerEntry;
@@ -39,7 +40,8 @@ namespace Schooler.Views
 			base.OnAppearing();
 
 			idx = ((Todo)this.BindingContext).Idx;
-			dao = new ProjectDao(((Todo)BindingContext).ProjectIdx);
+			projectIdx = ((Todo)BindingContext).ProjectIdx;
+			dao = new ProjectDao(projectIdx);
 
 			Title = (idx == -1) ? "New Todo" : "Edit Todo";
 
@@ -99,7 +101,10 @@ namespace Schooler.Views
 				layout.Children.Add(deleteButton);
 			}
 
-			Content = layout;
+			ScrollView scrollView = new ScrollView();
+			scrollView.Content = layout;
+
+			Content = scrollView;
 		}
 
 		private async void SaveButton_Clicked(object sender, EventArgs e)
