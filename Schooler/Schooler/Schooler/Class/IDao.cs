@@ -68,7 +68,7 @@ namespace Schooler.Class
         protected class Relation
         {
             public string UserId { get; set; }
-            public string ProjectIdx { get; set; }
+            public int ProjectIdx { get; set; }
         }
 
         protected class FileWithByte

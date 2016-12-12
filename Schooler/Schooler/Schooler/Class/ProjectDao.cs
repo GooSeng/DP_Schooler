@@ -29,6 +29,31 @@ namespace Schooler.Class
             }
         }
 
+        public void AddTodo(Todo item)
+        {
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("Todo/", content).Result;
+            }
+        }
+
+        public void AddTeam(string userId)
+        {
+            Relation item = new Relation { ProjectIdx = idx, UserId = userId };
+            using (client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.PostAsync("Team/", content).Result;
+            }
+        }
+
         public List<string> GetTeamUser()
         {
             using (client = new HttpClient())
