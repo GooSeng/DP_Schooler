@@ -9,7 +9,7 @@ namespace Schooler.Class
     class Assignment
     {
         public string name { get; set; }
-        protected DateTime deadline;
+        public DateTime deadline { get; set; }
         protected List<File> fileList;
         protected List<Comment> commentList;
         protected int idx;
