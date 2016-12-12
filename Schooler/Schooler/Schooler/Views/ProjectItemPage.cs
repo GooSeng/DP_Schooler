@@ -197,7 +197,7 @@ namespace Schooler.Views
 			}
 			else
 			{
-				dao.UpdateAssignment(todoItem);
+				dao.Update(todoItem);
 			}
 
 			//				App.Database.SaveItem(todoItem);
@@ -207,7 +207,7 @@ namespace Schooler.Views
 
 		private async void DeleteButton_Clicked(object sender, EventArgs e)
 		{
-			dao.DeleteAssigment();
+			dao.Delete();
 			await Navigation.PopAsync();
 		}
 
