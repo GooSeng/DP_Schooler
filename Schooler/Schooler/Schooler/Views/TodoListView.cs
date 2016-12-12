@@ -27,8 +27,8 @@ namespace Schooler.Views
 			};
 			listView.ItemsSource = new Todo[]
 			{
-				new Todo { name = "A" },
-				new Todo { name = "B" }
+				new Todo { Name = "A" },
+				new Todo { Name = "B" }
 			};
 			listView.ItemSelected += ListView_ItemSelected;
 
