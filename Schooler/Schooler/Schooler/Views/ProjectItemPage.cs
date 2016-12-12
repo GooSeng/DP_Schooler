@@ -134,9 +134,10 @@ namespace Schooler.Views
 			{
 				HeightRequest = 100,
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(TeamCell)),
+//				ItemTemplate = new DataTemplate(typeof(TeamCell)),
 			};
-			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
+			teamList.ItemsSource = dao.GetTeamUser();
+//			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
 			var teamAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			teamEntry = new Entry { WidthRequest = 300 };
 			teamAddBtn.Clicked += TeamAddBtn_Clicked;
