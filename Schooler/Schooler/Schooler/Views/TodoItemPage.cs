@@ -14,8 +14,9 @@ namespace Schooler.Views
 		int idx;
 		ProjectDao dao;
 		Picker progressEntry;
+        Picker managerEntry;
 
-		public TodoItemPage()
+        public TodoItemPage()
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
 
@@ -53,7 +54,13 @@ namespace Schooler.Views
 //			progressEntry.SetBinding(Picker.SelectedIndexProperty, "Progress");
 
 			var managerLbl = new Label { Text = "Manager" };
-			var managerEntry = new Entry();
+            List<String> team = dao.GetTeamUser();
+            managerEntry = new Xamarin.Forms.Picker();
+            foreach (var item in team)
+            {
+                managerEntry.Items.Add(item);
+            }
+            
 			managerEntry.SetBinding(Entry.TextProperty, "ManageUserId");
 
 			var saveButton = new Button { Text = "Save" };
