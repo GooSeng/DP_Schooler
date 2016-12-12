@@ -12,20 +12,15 @@ namespace Schooler.Views
 	public class ProjectItemPage : ContentPage
 	{
 		int idx;
-		AssignmentDao dao;
-
-		#region UI Variable
-
-
-		#endregion
-
+		ProjectDao dao;
+		
 		public ProjectItemPage(int _idx)
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
 			idx = _idx;
 
 			if (idx != -1)
-				dao = new AssignmentDao(idx);
+				dao = new ProjectDao(idx);
 
 			// Set Title
 			Title = (idx < 0) ? "Add Project" : "Edit Project";
@@ -43,7 +38,9 @@ namespace Schooler.Views
 
 			var deadlineLbl = new Label { Text = "Deadline" };
 			var deadlinePicker = new DatePicker();
-			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
+			deadlinePicker.Format = "yyyy-MM-dd hh:mm";
+			deadlinePicker.BindingContext = "deadline";
+//			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
 
 			var isTeamLbl = new Label { Text = "Team Project" };
 			var isTeamSwitch = new Switch();
@@ -57,10 +54,8 @@ namespace Schooler.Views
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
 			var fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
-			fileAddBtn.Clicked += (sender, argv) =>
-			{
-				// Todo: File add
-			};
+			fileAddBtn.Clicked += FileAddBtn_Clicked;
+
 			var fileLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
@@ -89,11 +84,8 @@ namespace Schooler.Views
 			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
 			var commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			var commentEntry = new Entry { WidthRequest = 300 };
-			commentAddBtn.Clicked += (sender, argv) =>
-			{
-				// Todo: Comment add
+			commentAddBtn.Clicked += CommentAddBtn_Clicked;
 
-			};
 			var commentLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
@@ -123,11 +115,8 @@ namespace Schooler.Views
 			teamList.SetBinding(ListView.ItemsSourceProperty, "teamList");
 			var teamAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			var teamEntry = new Entry { WidthRequest = 300 };
-			teamAddBtn.Clicked += (sender, argv) =>
-			{
-				// Todo: Team Member add
+			teamAddBtn.Clicked += TeamAddBtn_Clicked;
 
-			};
 			var teamLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
@@ -187,27 +176,41 @@ namespace Schooler.Views
 			Content = layout;
 		}
 
+		private void FileAddBtn_Clicked(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void CommentAddBtn_Clicked(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void TeamAddBtn_Clicked(object sender, EventArgs e)
+		{
+			// Todo: Team Member add
+		}
+
 		private async void SaveButton_Clicked(object sender, EventArgs e)
 		{
-			var todoItem = (Schooler.Class.Project)BindingContext;
+			Project item = (Project)BindingContext;
+			UserDao userDao = new UserDao();
 
 			if(idx < 0)
 			{
-
+				userDao.AddProject(item);
 			}
 			else
 			{
-				dao.UpdateAssignment(todoItem);
+				dao.Update(item);
 			}
-
-			//				App.Database.SaveItem(todoItem);
-
+			
 			await Navigation.PopAsync();
 		}
 
 		private async void DeleteButton_Clicked(object sender, EventArgs e)
 		{
-			dao.DeleteAssigment();
+			dao.Delete();
 			await Navigation.PopAsync();
 		}
 
