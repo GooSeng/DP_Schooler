@@ -5,24 +5,36 @@ using System.Reflection.Emit;
 using System.Text;
 
 using Xamarin.Forms;
+using Schooler.Class;
 
 namespace Schooler.Views
 {
 	public class ProjectItemPage : ContentPage
 	{
-		public ProjectItemPage(bool isNew)
+		int idx;
+		AssignmentDao dao;
+
+		#region UI Variable
+
+
+		#endregion
+
+		public ProjectItemPage(int _idx)
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
+			idx = _idx;
+
+			if (idx != -1)
+				dao = new AssignmentDao(idx);
 
 			// Set Title
-			if (isNew)
-			{
-				Title = "Add Project";
-			}
-			else
-			{
-				Title = "Edit Project";
-			}
+			Title = (idx < 0) ? "Add Project" : "Edit Project";
+
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 
 			/// Project Class Member variable
 			var nameLbl = new Label { Text = "Name" };
@@ -141,24 +153,13 @@ namespace Schooler.Views
 
 			// Buttons
 			var saveButton = new Button { Text = "Save" };
-			saveButton.Clicked += (sender, e) =>
-			{
-				var todoItem = (Schooler.Class.Assignment)BindingContext;
-				//				App.Database.SaveItem(todoItem);
-				Navigation.PopAsync();
-			};
+			saveButton.Clicked += SaveButton_Clicked;
+
 			var deleteButton = new Button { Text = "Delete" };
-			deleteButton.Clicked += (sender, e) =>
-			{
-				var todoItem = (Schooler.Class.Assignment)BindingContext;
-				//				App.Database.DeleteItem(todoItem.ID);
-				Navigation.PopAsync();
-			};
+			deleteButton.Clicked += DeleteButton_Clicked;
+
 			var cancelButton = new Button { Text = "Cancel" };
-			cancelButton.Clicked += (sender, e) =>
-			{
-				Navigation.PopAsync();
-			};
+			cancelButton.Clicked += CancelButton_Clicked;
 
 			var layout = new StackLayout
 			{
@@ -170,7 +171,7 @@ namespace Schooler.Views
 					isTeamLbl, isTeamSwitch
 				}
 			};
-			if (!isNew)
+			if (idx != -1)
 			{
 				layout.Children.Add(fileLayout);
 				layout.Children.Add(commentLayout);
@@ -178,11 +179,41 @@ namespace Schooler.Views
 			}
 			layout.Children.Add(saveButton);
 			layout.Children.Add(cancelButton);
-			if (!isNew)
+			if (idx != -1)
 			{
 				layout.Children.Add(deleteButton);
 			}
+
 			Content = layout;
+		}
+
+		private async void SaveButton_Clicked(object sender, EventArgs e)
+		{
+			var todoItem = (Schooler.Class.Project)BindingContext;
+
+			if(idx < 0)
+			{
+
+			}
+			else
+			{
+				dao.UpdateAssignment(todoItem);
+			}
+
+			//				App.Database.SaveItem(todoItem);
+
+			await Navigation.PopAsync();
+		}
+
+		private async void DeleteButton_Clicked(object sender, EventArgs e)
+		{
+			dao.DeleteAssigment();
+			await Navigation.PopAsync();
+		}
+
+		private async void CancelButton_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PopAsync();
 		}
 	}
 }

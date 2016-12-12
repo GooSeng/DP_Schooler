@@ -22,6 +22,7 @@ namespace Schooler.Views
 
 		ListView fileList;
 		Button fileAddBtn;
+		Entry fileUrlEntry;
 		StackLayout fileLayout;
 
 		ListView commentList;
@@ -73,6 +74,7 @@ namespace Schooler.Views
 				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
+			fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
 			fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
 			fileAddBtn.Clicked += FileAddBtn_Clicked;
 
@@ -81,13 +83,14 @@ namespace Schooler.Views
 				Orientation = StackOrientation.Vertical,
 				Children =
 				{
+					new Label { Text = "File list" },
 					new StackLayout
 					{
 						VerticalOptions = LayoutOptions.Center,
 						Orientation = StackOrientation.Horizontal,
 						Children =
 						{
-							new Label { Text = "File list" },
+							fileUrlEntry,
 							fileAddBtn
 						}
 					},
