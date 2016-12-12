@@ -18,7 +18,7 @@ namespace Schooler.Views
 				HorizontalOptions = LayoutOptions.StartAndExpand
 			};
 
-			label.SetBinding(Label.TextProperty, "Content");
+			label.SetBinding(Label.TextProperty, "Name");
 
 			var typeLbl = new Label
 			{

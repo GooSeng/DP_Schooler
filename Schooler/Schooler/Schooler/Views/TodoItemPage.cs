@@ -54,7 +54,7 @@ namespace Schooler.Views
 
 			var managerLbl = new Label { Text = "Manager" };
 			var managerEntry = new Entry();
-			managerEntry.SetBinding(Entry.TextProperty, "managerUser");
+			managerEntry.SetBinding(Entry.TextProperty, "ManageUserId");
 
 			var saveButton = new Button { Text = "Save" };
 			saveButton.Clicked += SaveButton_Clicked;
@@ -89,7 +89,7 @@ namespace Schooler.Views
 		private async void SaveButton_Clicked(object sender, EventArgs e)
 		{
 			var item = (Schooler.Class.Todo)BindingContext;
-
+            item.Content = "N";
 			item.Progress = progressEntry.SelectedIndex == 0 ? "B" : progressEntry.SelectedIndex == 1 ? "P" : "E";
 
 			if(idx == -1)   // new Item
