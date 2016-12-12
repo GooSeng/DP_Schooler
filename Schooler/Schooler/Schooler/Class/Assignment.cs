@@ -15,6 +15,13 @@ namespace Schooler.Class
         protected int idx;
         protected IDao dao;
 
+		public Assignment()
+		{
+			idx = -1;
+			name = null;
+			deadline = DateTime.Now;
+		}
+
         public Assignment(int idx, string name, DateTime deadline)
         {
             this.idx = idx;

@@ -11,12 +11,39 @@ namespace Schooler.Views
 {
 	public class AssignmentItemPage : ContentPage
 	{
-		public AssignmentItemPage(bool isNew)
+		AssignmentDao dao;
+		int idx;
+
+		Label nameLbl;
+		Entry nameEntry;
+
+		Label deadlineLbl;
+		DatePicker deadlinePicker;
+
+		ListView fileList;
+		Button fileAddBtn;
+		StackLayout fileLayout;
+
+		ListView commentList;
+		Button commentAddBtn;
+		Entry commentEntry;
+		StackLayout commentLayout;
+
+		Button saveBtn;
+		Button cancelBtn;
+		Button deleteBtn;
+
+		StackLayout layout;
+
+
+		public AssignmentItemPage(int _idx)
 		{
 			NavigationPage.SetHasNavigationBar(this, true);
+			idx = _idx;
+			dao = new AssignmentDao(idx);
 
 			// Set Title
-			if (isNew)
+			if (idx < 0)
 			{
 				Title = "Add Assignment";
 			}
@@ -24,57 +51,32 @@ namespace Schooler.Views
 			{
 				Title = "Edit Assingment: ";
 			}
-			
 
-			/**
-			var table = new TableView
-			{
-				Root = new TableRoot
-				{
-					new TableSection("Assignment Info")
-					{
-						new TextCell
-						{
-							Text = "Name"
-						},
-						nameEntry,
-						new TextCell
-						{
-							Text = "Deadline"
-						},
-						deadlinePicker,
-					},
-					new TableSection("File list")
-					{
-						new FileList
-					}	
-				}
-			};
- */
+		}
 
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 			// Assignment Class Member variable
-			var nameLbl = new Label { Text = "Name" };
-			var nameEntry = new Entry();
+			nameLbl = new Label { Text = "Name" };
+			nameEntry = new Entry();
 			nameEntry.SetBinding(Entry.TextProperty, "name");
 
-			var deadlineLbl = new Label { Text = "Deadline" };
-			var deadlinePicker = new DatePicker();
+			deadlineLbl = new Label { Text = "Deadline" };
+			deadlinePicker = new DatePicker();
 			deadlinePicker.SetBinding(DatePicker.DateProperty, "deadline");
-			
-		
+
 			// File List 
-			var fileList = new ListView
+			fileList = new ListView
 			{
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
 			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
-			var fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
-			fileAddBtn.Clicked += (sender, argv) =>
-			{
-				// Todo: File add
-			};
-			var fileLayout = new StackLayout
+			fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
+			fileAddBtn.Clicked += FileAddBtn_Clicked;
+
+			fileLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
 				Children =
@@ -94,20 +96,17 @@ namespace Schooler.Views
 			};
 
 			// Comment List
-			var commentList = new ListView
+			commentList = new ListView
 			{
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
 			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
-			var commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
-			var commentEntry = new Entry { WidthRequest = 300 };
-			commentAddBtn.Clicked += (sender, argv) =>
-			{
-				// Todo: Comment add
+			commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
+			commentEntry = new Entry { WidthRequest = 300 };
+			commentAddBtn.Clicked += CommentAddBtn_Clicked;
 
-			};
-			var commentLayout = new StackLayout
+			commentLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
 				Children =
@@ -128,36 +127,16 @@ namespace Schooler.Views
 			};
 
 			// Buttons
-			var saveButton = new Button { Text = "Save" };
-			saveButton.Clicked += (sender, e) =>
-			{
-				//var todoItem = (Schooler.Class.Assignment)BindingContext;
-                DateTime time = (DateTime)(deadlinePicker.GetValue(DatePicker.DateProperty));
-                Assignment temp = new Assignment(0, nameEntry.Text, time);
-                if(isNew)
-                {
-                    UserDao dao = new UserDao();
-                    dao.AddAssignment(temp);
-                }
-				//				App.Database.SaveItem(todoItem);
-				Navigation.PopAsync();
-			};
+			saveBtn = new Button { Text = "Save" };
+			saveBtn.Clicked += SaveBtn_Clicked;
 
-			var deleteButton = new Button { Text = "Delete" };
-			deleteButton.Clicked += (sender, e) =>
-			{
-				var todoItem = (Schooler.Class.Assignment)BindingContext;
-				//				App.Database.DeleteItem(todoItem.ID);
-				Navigation.PopAsync();
-			};
+			deleteBtn = new Button { Text = "Delete" };
+			deleteBtn.Clicked += DeleteBtn_Clicked;
 
-			var cancelButton = new Button { Text = "Cancel" };
-			cancelButton.Clicked += (sender, e) =>
-			{
-				Navigation.PopAsync();
-			};
-			
-			var layout = new StackLayout
+			cancelBtn = new Button { Text = "Cancel" };
+			cancelBtn.Clicked += CancelBtn_Clicked;
+
+			layout = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				Padding = new Thickness(20),
@@ -166,18 +145,62 @@ namespace Schooler.Views
 					deadlineLbl, deadlinePicker,
 				}
 			};
-			if(!isNew)
+			if (idx != -1)
 			{
 				layout.Children.Add(fileLayout);
 				layout.Children.Add(commentLayout);
 			}
-			layout.Children.Add(saveButton);
-			layout.Children.Add(cancelButton);
-			if (!isNew)
+			layout.Children.Add(saveBtn);
+			layout.Children.Add(cancelBtn);
+			if (idx != -1)
 			{
-				layout.Children.Add(deleteButton);
+				layout.Children.Add(deleteBtn);
 			}
+
 			Content = layout;
+		}
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+
+			Content = null;
+		}
+
+		private void CommentAddBtn_Clicked(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private async void CancelBtn_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PopAsync();
+		}
+
+		private async void DeleteBtn_Clicked(object sender, EventArgs e)
+		{
+			UserDao userDao = new UserDao();
+
+			// Todo. 
+
+			await Navigation.PopAsync();
+		}
+
+		private async void SaveBtn_Clicked(object sender, EventArgs e)
+		{
+			var item = (Schooler.Class.Assignment)BindingContext;
+//			DateTime time = (DateTime)(deadlinePicker.GetValue(DatePicker.DateProperty));
+//			Assignment temp = new Assignment(0, nameEntry.Text, time);
+			if (idx < 0)
+			{
+				UserDao dao = new UserDao();
+				dao.AddAssignment(item);
+				//				dao.AddAssignment(temp);
+			}
+			await Navigation.PopAsync();
+		}
+
+		private async void FileAddBtn_Clicked(object sender, EventArgs e)
+		{
 		}
 	}
 }

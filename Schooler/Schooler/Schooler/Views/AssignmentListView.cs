@@ -41,7 +41,7 @@ namespace Schooler.Views
 		private void AddBtn_Clicked(object sender, EventArgs e)
 		{
 			//				var todoItem = new Assignment();
-			var assignmentPage = new AssignmentItemPage(true);
+			var assignmentPage = new AssignmentItemPage(-1);
 			//				todoPage.BindingContext = todoItem;
 			Navigation.PushAsync(assignmentPage);
 		}
@@ -50,7 +50,7 @@ namespace Schooler.Views
 		{
 			if(e.SelectedItem != null)
 			{
-				var assignmentItemPage = new AssignmentItemPage(false);
+				var assignmentItemPage = new AssignmentItemPage(-1);
 				assignmentItemPage.BindingContext = e.SelectedItem;
 				Navigation.PushAsync(assignmentItemPage);
 				listView.SelectedItem = null;
