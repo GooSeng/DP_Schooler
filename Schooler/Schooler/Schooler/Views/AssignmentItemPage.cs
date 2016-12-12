@@ -104,14 +104,14 @@ namespace Schooler.Views
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
+			commentList.ItemTemplate.SetBinding(CommentCell.idxProperty, "Idx");
 			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
             commentList.ItemsSource = dao.GetCommentList();
             commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			commentEntry = new Entry { WidthRequest = 300 };
             commentEntry.SetBinding(Entry.TextProperty, "comment");
-
             commentAddBtn.Clicked += CommentAddBtn_Clicked;
-
+			
 			commentLayout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
@@ -166,6 +166,7 @@ namespace Schooler.Views
 
 			Content = layout;
 		}
+
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();

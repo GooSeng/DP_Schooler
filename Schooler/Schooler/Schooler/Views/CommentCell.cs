@@ -12,7 +12,7 @@ namespace Schooler.Views
 	public class CommentCell : ViewCell
 	{
 		public static readonly BindableProperty idxProperty = 
-			BindableProperty.Create("idx", typeof(int), typeof(CommentCell));
+			BindableProperty.Create("idx", typeof(int), typeof(CommentCell), -1);
 		public int idx
 		{
 			get
@@ -28,13 +28,12 @@ namespace Schooler.Views
 		public CommentCell()
 		{
 			//idx에가다 값만 들어가면댐
-			
-
 			var uploaderLb = new Label();
 			uploaderLb.SetBinding(Label.TextProperty, "uploadUserId");
 
 			var contentLb = new Label();
 			contentLb.SetBinding(Label.TextProperty, "comment");
+
 
 			var deleteBtn = new Button { Text = "-" };
 			deleteBtn.Clicked += DeleteBtn_Clicked;
