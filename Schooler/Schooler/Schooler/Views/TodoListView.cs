@@ -13,6 +13,7 @@ namespace Schooler.Views
 	public class TodoListView : ContentView
 	{
 		ListView listView;
+		ProjectDao dao;
 
 		protected override void OnParentSet()
 		{
@@ -24,7 +25,8 @@ namespace Schooler.Views
 				ItemTemplate = new DataTemplate(typeof(TodoItemCell)),
 				IsPullToRefreshEnabled = true
 			};
-			listView.ItemsSource = ((List<Todo>)this.BindingContext);
+			listView.ItemsSource = dao.GetTodo();
+//			listView.ItemsSource = ((List<Todo>)this.BindingContext);
 			listView.ItemSelected += ListView_ItemSelected;
 			listView.RefreshCommand = new Command(() =>
 			{
@@ -48,6 +50,7 @@ namespace Schooler.Views
 		public TodoListView(int _pIdx)
 		{
 			projectIdx = _pIdx;
+			dao = new ProjectDao(projectIdx);
 		}
 		
 		private async void AddBtn_Clicked(object sender, EventArgs e)
