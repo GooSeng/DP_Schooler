@@ -247,7 +247,17 @@ namespace Schooler.Views
 
         private void TeamAddBtn_Clicked(object sender, EventArgs e)
 		{
-			dao.AddTeam(teamEntry.Text);
+            bool isNotHave = true;
+            foreach (var item in dao.GetTeamUser())
+            {
+                if (item.Equals(teamEntry.Text))
+                {
+                    isNotHave = false;
+                    break;
+                }
+            }
+            if(isNotHave)
+			    dao.AddTeam(teamEntry.Text);
 			this.OnAppearing();
 		}
 
