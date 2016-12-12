@@ -30,17 +30,19 @@ namespace Schooler.Views
 			//idx에가다 값만 들어가면댐
 			var uploaderLb = new Label();
 			uploaderLb.SetBinding(Label.TextProperty, "uploadUserId");
-
-			var contentLb = new Label();
+            uploaderLb.TextColor = Color.Navy;
+            var contentLb = new Label();
 			contentLb.SetBinding(Label.TextProperty, "comment");
+            contentLb.TextColor = Color.Navy;
 
-
-			var deleteBtn = new Button { Text = "-" };
+            var deleteBtn = new Button { Text = "-" };
 			deleteBtn.Clicked += DeleteBtn_Clicked;
+            deleteBtn.TextColor = Color.Navy;
 
-			View = new StackLayout
+            View = new StackLayout
 			{
-				Orientation = StackOrientation.Horizontal,
+               
+                Orientation = StackOrientation.Horizontal,
 				Children =
 				{
 					uploaderLb, contentLb, deleteBtn

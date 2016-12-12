@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schooler.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -10,30 +11,56 @@ namespace Schooler.Views
 {
 	public class FileCell : ViewCell
 	{
-		public FileCell()
+        public static readonly BindableProperty idxProperty =
+            BindableProperty.Create("idx", typeof(int), typeof(FileCell), -1);
+        public int idx
+        {
+            get
+            {
+                return (int)base.GetValue(FileCell.idxProperty);
+            }
+            set
+            {
+                base.SetValue(FileCell.idxProperty, value);
+            }
+        }
+        Label nameLbl;
+        public FileCell()
 		{
-			var nameLbl = new Label();
-			nameLbl.SetBinding(Label.TextProperty, "fileName");
+			nameLbl = new Label();
+			nameLbl.SetBinding(Label.TextProperty, "name");
+            
+            var dateLbl = new Label();
+			dateLbl.SetBinding(Label.TextProperty, "uploadUserId");
 
-			var dateLbl = new Label();
-			dateLbl.SetBinding(Label.TextProperty, "uploadTime");
 
-			var deleteBtn = new Button { Text = "-" };
-			deleteBtn.Clicked += DeleteBtn_Clicked;
+            var deleteBtn = new Button { Text = "-" };
+            deleteBtn.Clicked += DeleteBtn_Clicked;
+            var downBtn = new Button { Text = "down" };
+            downBtn.Clicked += DownBtn_Clicked;
+            downBtn.TextColor = Color.White;
+            downBtn.BackgroundColor = Color.Blue;
 
-			View = new StackLayout
-			{
+            View = new StackLayout
+            {
+                
 				Orientation = StackOrientation.Horizontal,
 				Children =
 				{
-					nameLbl, dateLbl, deleteBtn
+					nameLbl, dateLbl, deleteBtn, downBtn
 				}
 			};
 		}
 
-		private void DeleteBtn_Clicked(object sender, EventArgs e)
-		{
-			// Todo: File delete
-		}
-	}
+        private void DeleteBtn_Clicked(object sender, EventArgs e)
+        {
+            AssignmentDao dao = new AssignmentDao(-1);
+            dao.DeleteFile(idx);
+        }
+        private void DownBtn_Clicked(object sender, EventArgs e)
+        {
+            AssignmentDao dao = new AssignmentDao(-1);
+            dao.DownloadFile(idx, nameLbl.Text);
+        }
+    }
 }

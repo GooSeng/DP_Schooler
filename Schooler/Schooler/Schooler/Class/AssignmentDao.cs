@@ -50,7 +50,7 @@ namespace Schooler.Class
 
         private async Task<byte[]> GetFileByte(string url)
         {
-            var file = await PCLStorage.FileSystem.Current.GetFileFromPathAsync(url);
+            var file = await PCLStorage.FileSystem.Current.LocalStorage.GetFileAsync(url);
             using (Stream fileStream = await file.OpenAsync(FileAccess.Read))
             {
                 using (var memoryStream = new MemoryStream())
@@ -62,21 +62,31 @@ namespace Schooler.Class
 
         }
 
-        public void DownloadFile(int idx)
+        internal void DeleteFile(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("File/" + idx).Result;
+            }
+        }
+
+        public void DownloadFile(int idx, string name)
         {
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
                 var result = client.GetStringAsync("File/" + idx).Result;
-                SaveFileByte(result);
+                SaveFileByte(result, name);
                 
             }
         }
 
-        private async void SaveFileByte(string bytes)
+        private async void SaveFileByte(string bytes, string name)
         {
-            var file = await PCLStorage.FileSystem.Current.LocalStorage.CreateFileAsync("file",CreationCollisionOption.GenerateUniqueName);
+            var file = await PCLStorage.FileSystem.Current.LocalStorage.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
             await file.WriteAllTextAsync(bytes);
+           
         }
 
         public List<File> GetFileList()
@@ -84,7 +94,7 @@ namespace Schooler.Class
             using (client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                var result = client.GetStringAsync("RelationProjectAndFile/" + idx).Result;
+                var result = client.GetStringAsync("RelationProjectFile/" + idx).Result;
                 var ScheduleList = JsonConvert.DeserializeObject<List<File>>(result);
                 return ScheduleList;
             }

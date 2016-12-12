@@ -73,7 +73,9 @@ namespace Schooler.Views
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.FileCell))
 			};
-			fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
+            fileList.ItemTemplate.SetBinding(FileCell.idxProperty, "Idx");
+            fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
+            fileList.ItemsSource = dao.GetFileList();
 			fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
 			fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
 			fileAddBtn.Clicked += FileAddBtn_Clicked;
@@ -84,7 +86,8 @@ namespace Schooler.Views
 				Children =
 				{
 					new Label { Text = "File list" },
-					new StackLayout
+                    fileList,
+                    new StackLayout
 					{
 						VerticalOptions = LayoutOptions.Center,
 						Orientation = StackOrientation.Horizontal,
@@ -93,8 +96,8 @@ namespace Schooler.Views
 							fileUrlEntry,
 							fileAddBtn
 						}
-					},
-					fileList,
+					}
+					
 				}
 			};
 
@@ -221,14 +224,16 @@ namespace Schooler.Views
             var item = new File();
             item.uploadUserId = userdao.GetLoginedUser();
             item.projectIdx = idx;
-            string name = fileUrlEntry.Text;
-            item.url = name;
-            int at = name.LastIndexOf('\\');
-            name = name.Substring(at);
-            item.name = name;
+            item.name = fileUrlEntry.Text;
+            item.url = item.name;
 
 
-            dao.UploadFile(item);
+            bool isOk = await dao.UploadFile(item);
+
+            if (isOk)
+                await DisplayAlert("Good", "File Upload", "OK");
+            else
+                await DisplayAlert("Error", "File size error, Please Check the File Size", "Ok");
         }
 	}
 }
