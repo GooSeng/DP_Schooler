@@ -148,7 +148,6 @@ namespace Schooler.Views
 
 			// Todo List
 			TodoListView todolistView = new TodoListView(idx);
-			todolistView.BindingContext = dao.GetTodo();
 			var todoLayout = new StackLayout
 			{
 				Children =
@@ -180,6 +179,8 @@ namespace Schooler.Views
 			};
 			if (idx != -1)
 			{
+				todolistView.BindingContext = dao.GetTodo();
+
 				layout.Children.Add(fileLayout);
 				layout.Children.Add(commentLayout);
 				layout.Children.Add(todoLayout);
