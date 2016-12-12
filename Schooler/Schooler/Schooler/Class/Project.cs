@@ -8,9 +8,9 @@ namespace Schooler.Class
 {
     class Project : Assignment
     {
-        private bool isTeam;
-        private List<string> teamList;
-        private List<Todo> todoList;
+        public bool isTeam { get; set; }
+        public List<string> teamList { get; set; }
+        public List<Todo> todoList { get; set; }
 
 		public Project()
 			: base()
