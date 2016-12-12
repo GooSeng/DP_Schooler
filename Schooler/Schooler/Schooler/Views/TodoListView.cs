@@ -14,46 +14,56 @@ namespace Schooler.Views
 	{
 		ListView listView;
 
-		public TodoListView()
+		protected override void OnParentSet()
 		{
-//			Title = "Todo";
-
-//			NavigationPage.SetHasNavigationBar(this, true);
-
+			base.OnParentSet();
 			listView = new ListView
 			{
+				HeightRequest = 100,
 				RowHeight = 40,
-				ItemTemplate = new DataTemplate(typeof(TodoItemCell))
+				ItemTemplate = new DataTemplate(typeof(TodoItemCell)),
+				IsPullToRefreshEnabled = true
 			};
-			listView.ItemsSource = new Todo[]
-			{
-				new Todo { Name = "A" },
-				new Todo { Name = "B" }
-			};
+			listView.ItemsSource = ((List<Todo>)this.BindingContext);
 			listView.ItemSelected += ListView_ItemSelected;
+			listView.RefreshCommand = new Command(() =>
+			{
+				listView.ItemsSource = ((List<Todo>)this.BindingContext);
+				listView.IsRefreshing = false;
+			});
 
 			var addBtn = new Button();
 			addBtn.Text = "+";
-			addBtn.Clicked += (sender, args) => {
-				var todoItem = new Todo();
-				var todoPage = new TodoItemPage();
-				todoPage.BindingContext = todoItem;
-				Navigation.PushAsync(todoPage);
-			};
+			addBtn.Clicked += AddBtn_Clicked;
 
 			var layout = new StackLayout();
 			layout.Children.Add(addBtn);
 			layout.Children.Add(listView);
 			layout.VerticalOptions = LayoutOptions.FillAndExpand;
 			Content = layout;
+
 		}
 
-		private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		int projectIdx;
+		public TodoListView(int _pIdx)
+		{
+			projectIdx = _pIdx;
+		}
+		
+		private async void AddBtn_Clicked(object sender, EventArgs e)
+		{
+			var item = new Todo(projectIdx);
+			var todoPage = new TodoItemPage();
+			todoPage.BindingContext = (Todo)item;
+			await Navigation.PushAsync(todoPage);
+		}
+
+		private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 		{
 			var todoPage = new TodoItemPage();
-			todoPage.BindingContext = this.listView.SelectedItem;
-			Navigation.PushAsync(todoPage);
-			listView.SelectedItem = null;
+			todoPage.BindingContext = ((Todo)e.SelectedItem);
+			await Navigation.PushAsync(todoPage);
+//			listView.SelectedItem = null;
 		}
 	}
 }
