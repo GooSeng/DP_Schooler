@@ -11,12 +11,26 @@ namespace Schooler.Views
 {
 	public class CommentCell : ViewCell
 	{
-        int idx;
+		public static readonly BindableProperty idxProperty = 
+			BindableProperty.Create("idx", typeof(int), typeof(CommentCell));
+		public int idx
+		{
+			get
+			{
+				return (int)base.GetValue(CommentCell.idxProperty);
+			}
+			set
+			{
+				base.SetValue(CommentCell.idxProperty, value);
+			}
+		}
+
 		public CommentCell()
 		{
-            //idx에가다 값만 들어가면댐
+			//idx에가다 값만 들어가면댐
+			
 
-            var uploaderLb = new Label();
+			var uploaderLb = new Label();
 			uploaderLb.SetBinding(Label.TextProperty, "uploadUserId");
 
 			var contentLb = new Label();
