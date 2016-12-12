@@ -76,6 +76,7 @@ namespace Schooler.Views
             fileList.ItemTemplate.SetBinding(FileCell.idxProperty, "Idx");
             fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
             fileList.ItemsSource = dao.GetFileList();
+			fileList.ItemSelected += FileList_ItemSelected;
 			fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
 			fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
 			fileAddBtn.Clicked += FileAddBtn_Clicked;
@@ -109,6 +110,7 @@ namespace Schooler.Views
 			commentList.ItemTemplate.SetBinding(CommentCell.idxProperty, "Idx");
 			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
             commentList.ItemsSource = dao.GetCommentList();
+			commentList.ItemSelected += CommentList_ItemSelected;
             commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			commentEntry = new Entry { WidthRequest = 300 };
             commentEntry.SetBinding(Entry.TextProperty, "comment");
@@ -165,7 +167,22 @@ namespace Schooler.Views
 				layout.Children.Add(deleteBtn);
 			}
 
-			Content = layout;
+			var view = new ScrollView()
+			{
+				Content = layout
+			};
+
+			Content = view;
+		}
+
+		private void FileList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			OnAppearing();
+		}
+
+		private void CommentList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			OnAppearing();
 		}
 
 		protected override void OnDisappearing()
@@ -183,8 +200,9 @@ namespace Schooler.Views
             item.projectIdx = idx;
 
             dao.UploadComment(item);
+			OnAppearing();
 
-        }
+		}
 
 		private async void CancelBtn_Clicked(object sender, EventArgs e)
 		{
@@ -232,6 +250,8 @@ namespace Schooler.Views
                 await DisplayAlert("Good", "File Upload", "OK");
             else
                 await DisplayAlert("Error", "File size error, Please Check the File Size", "Ok");
-        }
+
+			OnAppearing();
+		}
 	}
 }

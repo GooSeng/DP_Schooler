@@ -68,6 +68,7 @@ namespace Schooler.Views
             fileList.ItemTemplate.SetBinding(FileCell.idxProperty, "Idx");
             fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
             fileList.ItemsSource = dao.GetFileList();
+			fileList.ItemSelected += FileList_ItemSelected;
             fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
             fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
             fileAddBtn.Clicked += FileAddBtn_Clicked;
@@ -107,6 +108,7 @@ namespace Schooler.Views
 				commentList.ItemsSource = dao.GetCommentList();
 				commentList.IsRefreshing = false;
 			});
+			commentList.ItemSelected += CommentList_ItemSelected;
 			commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
             commentEntry = new Entry { WidthRequest = 300 };
             commentEntry.SetBinding(Entry.TextProperty, "comment");
@@ -221,7 +223,17 @@ namespace Schooler.Views
 			Content = scrollView;
 		}
 
-        private async void FileAddBtn_Clicked(object sender, EventArgs e)
+		private void FileList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			OnAppearing();
+		}
+
+		private void CommentList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			OnAppearing();
+		}
+
+		private async void FileAddBtn_Clicked(object sender, EventArgs e)
         {
             UserDao userdao = new UserDao();
             var item = new File();
