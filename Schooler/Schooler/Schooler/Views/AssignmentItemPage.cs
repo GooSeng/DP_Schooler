@@ -108,7 +108,9 @@ namespace Schooler.Views
             commentList.ItemsSource = dao.GetCommentList();
             commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			commentEntry = new Entry { WidthRequest = 300 };
-			commentAddBtn.Clicked += CommentAddBtn_Clicked;
+            commentEntry.SetBinding(Entry.TextProperty, "comment");
+
+            commentAddBtn.Clicked += CommentAddBtn_Clicked;
 
 			commentLayout = new StackLayout
 			{
@@ -172,8 +174,14 @@ namespace Schooler.Views
 
 		private void CommentAddBtn_Clicked(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
-		}
+            UserDao userdao = new UserDao();
+            var item = (Schooler.Class.Comment)BindingContext;
+            item.uploadUserId = userdao.GetLoginedUser();
+            item.projectIdx = idx;
+
+            dao.UploadComment(item);
+
+        }
 
 		private async void CancelBtn_Clicked(object sender, EventArgs e)
 		{
@@ -182,9 +190,7 @@ namespace Schooler.Views
 
 		private async void DeleteBtn_Clicked(object sender, EventArgs e)
 		{
-			UserDao userDao = new UserDao();
-
-			// Todo. 
+            dao.Delete();
 
 			await Navigation.PopAsync();
 		}
@@ -200,11 +206,27 @@ namespace Schooler.Views
 				dao.AddAssignment(item);
 				//				dao.AddAssignment(temp);
 			}
+            else
+            {
+                dao.Update(item);
+            }
 			await Navigation.PopAsync();
 		}
 
 		private async void FileAddBtn_Clicked(object sender, EventArgs e)
 		{
-		}
+            UserDao userdao = new UserDao();
+            var item = new File();
+            item.uploadUserId = userdao.GetLoginedUser();
+            item.projectIdx = idx;
+            string name = fileUrlEntry.Text;
+            item.url = name;
+            int at = name.LastIndexOf('\\');
+            name = name.Substring(at);
+            item.name = name;
+
+
+            dao.UploadFile(item);
+        }
 	}
 }
