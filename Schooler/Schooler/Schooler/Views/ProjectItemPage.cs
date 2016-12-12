@@ -202,7 +202,7 @@ namespace Schooler.Views
 			}
 			else
 			{
-				dao.Update(item);
+				dao.UpdateAssignment(todoItem);
 			}
 			
 			await Navigation.PopAsync();
