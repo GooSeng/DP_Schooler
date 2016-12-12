@@ -49,7 +49,6 @@
     <Compile Include="Pages\ProjectPage.cs" />
     <Compile Include="Views\AssignmentItemCell.cs" />
     <Compile Include="Views\AssignmentItemPage.cs" />
-    <Compile Include="Views\AssignmentListView.cs" />
     <Compile Include="Views\CalendarView.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\MainPage.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="Views\FileCell.cs" />
     <Compile Include="Views\ProjectItemCell.cs" />
     <Compile Include="Views\ProjectItemPage.cs" />
-    <Compile Include="Views\ProjectListView.cs" />
     <Compile Include="Views\TodoItemCell.cs" />
     <Compile Include="Views\TodoItemPage.cs" />
     <Compile Include="Views\TodoListView.cs" />

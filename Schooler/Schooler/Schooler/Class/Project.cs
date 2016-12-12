@@ -12,6 +12,11 @@ namespace Schooler.Class
         private List<string> teamList;
         private List<Todo> todoList;
 
+		public Project()
+			: base()
+		{
+		}
+
         public Project(int idx, string name, DateTime deadline, bool isTeam)
             :base(idx,name,deadline)
         {
