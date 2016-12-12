@@ -53,6 +53,16 @@ namespace Schooler.Class
             }
         }
 
+        public void DeleteTodo(int idx)
+        {
+            using (client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var r = client.DeleteAsync("Todo/"+idx).Result;
+            }
+        }
+
+
         public void AddTeam(string userId)
         {
             Relation item = new Relation { ProjectIdx = idx, UserId = userId };
