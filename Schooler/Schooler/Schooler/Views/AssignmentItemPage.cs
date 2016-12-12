@@ -104,7 +104,8 @@ namespace Schooler.Views
 				RowHeight = 40,
 				ItemTemplate = new DataTemplate(typeof(Views.CommentCell))
 			};
-			commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
+            commentList.ItemTemplate.SetBinding(CommentCell.idxProperty, "idx");
+            commentList.SetBinding(ListView.ItemsSourceProperty, "commentList");
             commentList.ItemsSource = dao.GetCommentList();
             commentAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30 };
 			commentEntry = new Entry { WidthRequest = 300 };

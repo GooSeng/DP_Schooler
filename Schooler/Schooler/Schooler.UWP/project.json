@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "PCLStorage": "1.0.2",
     "Xamarin.Forms": "2.3.3.168"
   },
   "frameworks": {
