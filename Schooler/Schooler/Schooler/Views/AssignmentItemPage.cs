@@ -77,7 +77,7 @@ namespace Schooler.Views
             fileList.SetBinding(ListView.ItemsSourceProperty, "fileList");
             fileList.ItemsSource = dao.GetFileList();
 			fileList.ItemSelected += FileList_ItemSelected;
-			fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 100, HeightRequest = 30 };
+			fileUrlEntry = new Entry { Placeholder = "URL", WidthRequest = 200, HeightRequest = 30 };
 			fileAddBtn = new Button { Text = "+", WidthRequest = 30, HeightRequest = 30, Margin = 0 };
 			fileAddBtn.Clicked += FileAddBtn_Clicked;
 
